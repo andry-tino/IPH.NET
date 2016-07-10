@@ -7,16 +7,16 @@ namespace IPH
 {
     using System;
     using System.Drawing;
+    using System.Drawing.Drawing2D;
+    using System.Drawing.Imaging;
     using System.IO;
-
-    using NativeImage = System.Drawing.Bitmap;
-
+    
     /// <summary>
     /// Wrapper around <see cref="System.Drawing.Image"/> and <see cref="Matrix{T}"/>.
     /// </summary>
     public class Image : IDisposable, ICloneable
     {
-        private NativeImage image;
+        private Bitmap image;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
@@ -35,6 +35,20 @@ namespace IPH
             }
 
             this.image = new Bitmap(path);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class.
+        /// </summary>
+        /// <param name="bitmap"></param>
+        private Image(Bitmap bitmap)
+        {
+            if (bitmap == null)
+            {
+                throw new ArgumentNullException(nameof(bitmap));
+            }
+
+            this.image = bitmap;
         }
 
         /// <summary>
@@ -70,9 +84,24 @@ namespace IPH
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
+        /// <remarks>
+        /// This performs a bicubic, high quality,  composition and high quality smoothing transformation.
+        /// </remarks>
         public Image Resize(int width, int height)
         {
-            return null;
+            Bitmap resizedBitmap = ResizeBitmap(this.image, width, height);
+            return new Image(resizedBitmap);
+        }
+
+        /// <summary>
+        /// Extract one pixel at a specific coordinate.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public Color ColorAt(int x, int y)
+        {
+            return this.image.GetPixel(x, y);
         }
 
         /// <summary>
@@ -91,5 +120,34 @@ namespace IPH
         {
             throw new NotImplementedException();
         }
+
+        #region Utilities
+        
+        private static Bitmap ResizeBitmap(Bitmap source, int width, int height)
+        {
+            var destinationRectangle = new Rectangle(0, 0, width, height);
+            var destinationBitmap = new Bitmap(width, height);
+
+            destinationBitmap.SetResolution(source.HorizontalResolution, source.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destinationBitmap))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(source, destinationRectangle, 0, 0, source.Width, source.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destinationBitmap;
+        }
+
+        #endregion
     }
 }

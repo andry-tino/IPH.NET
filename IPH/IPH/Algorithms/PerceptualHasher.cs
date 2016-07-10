@@ -6,6 +6,7 @@
 namespace IPH
 {
     using System;
+    using System.Collections.Generic;
 
     using MathNet.Numerics.LinearAlgebra;
 
@@ -15,6 +16,11 @@ namespace IPH
     public class PerceptualHasher : IHasher
     {
         private const int Size = 64;
+        private const int SubSize = 8; // Must be < Size
+
+        private const double RedLUMAFactor = 0.299;
+        private const double GreenLUMAFactor = 0.587;
+        private const double BlueLUMAFactor = 0.114;
 
         private readonly Image source;
 
@@ -53,17 +59,107 @@ namespace IPH
         private void Compute(out Hash64Bit hash)
         {
             // Generate a matrix of dimensions: Size x Size
-            Matrix<RGBAColor> resized = CreateRGBAMatrix(Size);
+            Matrix<RGBAColor> resizedMatrix = CreateRGBAMatrix(Size);
 
-            hash = null;
+            // Get a copy of the image we need to compute the hash on
+            // but resized to a default dimension Size
+            // Attention: this will alter the proportions, but it is fine
+            Image resizedImage = this.source.Resize(Size, Size);
+
+            // Define quantities
+            double[] row = new double[Size];
+            List<double[]> rows = new List<double[]>(Size);
+
+            // Calculate LUMA from RGB and DCT for each row
+            for (int y = 0; y < Size; y++)
+            {
+                for (int x = 0; x < Size; x++)
+                {
+                    RGBAColor color = Color2RGBAColor(resizedImage.ColorAt(x, y));
+                    row[x] = Math.Floor(
+                        color.Red * RedLUMAFactor + 
+                        color.Green * GreenLUMAFactor + 
+                        color.Blue * BlueLUMAFactor);
+                }
+                rows[y] = DiscreteCosineTransform1Dimension(row);
+            }
+
+            // We need the resized matrix and image no more
+            resizedMatrix = null;
+            resizedImage.Dispose();
+            resizedImage = null;
+
+            // More quantities
+            double[] col = new double[Size];
+            List<double[]> matrix = new List<double[]>(Size);
+
+            // Calculate the DCT for each column
+            for (int x = 0; x < Size; x++)
+            {
+                for (int y = 0; y < Size; y++)
+                {
+                    col[y] = rows[y][x];
+                }
+                matrix[x] = DiscreteCosineTransform1Dimension(col);
+            }
+
+            // Extract top SubSize x SubSize pixels
+            double[,] pixels = new double[SubSize, SubSize];
+            for (int y = 0; y < SubSize; y++)
+            {
+                for (int x = 0; x < SubSize; x++)
+                {
+                    pixels[y, x] = matrix[y][x];
+                }
+            }
+            double median = MedianFilter(pixels);
+
+            // Calculate final hash
+            ulong rawHash = 0x0;
+            ulong one = 0x1;
+
+            for (int i = 0; i < SubSize; i++)
+            {
+                for (int j = 0; j < SubSize; j++)
+                {
+                    double pixel = pixels[i, j];
+                    if (pixel > median)
+                    {
+                        rawHash |= one;
+                    }
+                    one = one << 1;
+                }
+            }
+
+            hash = new Hash64Bit(rawHash);
+        }
+
+        private static double[] DiscreteCosineTransform1Dimension(double[] vector)
+        {
+            return null;
+        }
+
+        private static double MedianFilter(double[,] matrix)
+        {
+            return 0;
         }
 
         #region Utilities
 
-        private Matrix<RGBAColor> CreateRGBAMatrix(int size)
+        private static Matrix<RGBAColor> CreateRGBAMatrix(int rowsNumber, int colsNumber)
         {
             var matrixBuilder = Matrix<RGBAColor>.Build;
-            return matrixBuilder.Dense(size, size);
+            return matrixBuilder.Dense(rowsNumber, colsNumber);
+        }
+
+        private static Matrix<RGBAColor> CreateRGBAMatrix(int size)
+        {
+            return CreateRGBAMatrix(size, size);
+        }
+
+        private static RGBAColor Color2RGBAColor(System.Drawing.Color color)
+        {
+            return new RGBAColor(color.R, color.G, color.B, color.A);
         }
 
         #endregion

@@ -18,8 +18,9 @@ namespace IPH
         /// <summary>
         /// 
         /// </summary>
-        public Hash64Bit()
+        public Hash64Bit(ulong value)
         {
+            this.hash = value;
         }
 
         /// <summary>
