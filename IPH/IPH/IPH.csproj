@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Image.cs" />
+    <Compile Include="IHash.cs" />
+    <Compile Include="IHasher.cs" />
+    <Compile Include="Data\Image.cs" />
     <Compile Include="Iph.cs" />
+    <Compile Include="Algorithms\PerceptualHasher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
