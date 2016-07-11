@@ -195,6 +195,9 @@ namespace IPH
 
         #region Types
 
+        /// <summary>
+        /// 
+        /// </summary>
         private struct RGBAColor : IEquatable<RGBAColor>, IFormattable
         {
             private int r;

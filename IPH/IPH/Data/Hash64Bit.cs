@@ -30,5 +30,13 @@ namespace IPH
         {
             get { return null; }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Representation
+        {
+            get { return this.hash.ToString(); }
+        }
     }
 }

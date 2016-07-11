@@ -17,5 +17,10 @@ namespace IPH
         /// 
         /// </summary>
         IEnumerable<byte> Stream { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        string Representation { get; }
     }
 }
