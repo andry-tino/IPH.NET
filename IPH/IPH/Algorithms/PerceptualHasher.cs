@@ -103,13 +103,13 @@ namespace IPH
                 matrix[x] = DiscreteCosineTransform1Dimension(col);
             }
 
-            // Extract top SubSize x SubSize pixels
-            double[,] pixels = new double[SubSize, SubSize];
-            for (int y = 0; y < SubSize; y++)
+            // Extract top SubSize x SubSize pixels into a linear array
+            double[] pixels = new double[SubSize * SubSize];
+            for (int y = 0, i = 0; y < SubSize; y++)
             {
                 for (int x = 0; x < SubSize; x++)
                 {
-                    pixels[y, x] = matrix[y][x];
+                    pixels[i++] = matrix[y][x];
                 }
             }
             double median = MedianFilter(pixels);
@@ -118,17 +118,14 @@ namespace IPH
             ulong rawHash = 0x0;
             ulong one = 0x1;
 
-            for (int i = 0; i < SubSize; i++)
+            for (int i = 0; i < pixels.Length; i++)
             {
-                for (int j = 0; j < SubSize; j++)
+                double pixel = pixels[i];
+                if (pixel > median)
                 {
-                    double pixel = pixels[i, j];
-                    if (pixel > median)
-                    {
-                        rawHash |= one;
-                    }
-                    one = one << 1;
+                    rawHash |= one;
                 }
+                one = one << 1;
             }
 
             hash = new Hash64Bit(rawHash);
@@ -136,12 +133,44 @@ namespace IPH
 
         private static double[] DiscreteCosineTransform1Dimension(double[] vector)
         {
-            return null;
+            double[] transformed = new double[vector.Length];
+            int size = transformed.Length;
+            double sizeD = size;
+
+            for (int i = 0; i < size; i++)
+            {
+                double sum = 0;
+                for (int j = 0; j < size; j++)
+                {
+                    sum += vector[j] * Math.Cos(i * Math.PI * (((double)j + 0.5d) / sizeD));
+                }
+
+                sum *= Math.Sqrt(2d / sizeD);
+
+                if (i == 0)
+                {
+                    sum *= 1d / Math.Sqrt(2d);
+                }
+
+                transformed[i] = sum;
+            }
+
+            return transformed;
         }
 
-        private static double MedianFilter(double[,] matrix)
+        private static double MedianFilter(double[] array)
         {
-            return 0;
+            Array.Sort(array);
+            int middle = (int)Math.Floor(array.Length / 2d);
+
+            if (array.Length % 2 != 0)
+            {
+                return array[middle];
+            }
+
+            double low = array[middle];
+            double high = array[middle + 1];
+            return (low + high) / 2d;
         }
 
         #region Utilities
