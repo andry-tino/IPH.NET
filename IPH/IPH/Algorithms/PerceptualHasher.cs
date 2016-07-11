@@ -18,9 +18,9 @@ namespace IPH
         private const int Size = 64;
         private const int SubSize = 8; // Must be < Size
 
-        private const double RedLUMAFactor = 0.299;
-        private const double GreenLUMAFactor = 0.587;
-        private const double BlueLUMAFactor = 0.114;
+        private const double RedLUMAFactor = 0.299d;
+        private const double GreenLUMAFactor = 0.587d;
+        private const double BlueLUMAFactor = 0.114d;
 
         private readonly Image source;
 
@@ -58,9 +58,6 @@ namespace IPH
 
         private void Compute(out Hash64Bit hash)
         {
-            // Generate a matrix of dimensions: Size x Size
-            Matrix<RGBAColor> resizedMatrix = CreateRGBAMatrix(Size);
-
             // Get a copy of the image we need to compute the hash on
             // but resized to a default dimension Size
             // Attention: this will alter the proportions, but it is fine
@@ -68,7 +65,7 @@ namespace IPH
 
             // Define quantities
             double[] row = new double[Size];
-            List<double[]> rows = new List<double[]>(Size);
+            double[][] rows = new double[Size][];
 
             // Calculate LUMA from RGB and DCT for each row
             for (int y = 0; y < Size; y++)
@@ -85,13 +82,12 @@ namespace IPH
             }
 
             // We need the resized matrix and image no more
-            resizedMatrix = null;
             resizedImage.Dispose();
             resizedImage = null;
 
             // More quantities
             double[] col = new double[Size];
-            List<double[]> matrix = new List<double[]>(Size);
+            double[][] matrix = new double[Size][];
 
             // Calculate the DCT for each column
             for (int x = 0; x < Size; x++)
@@ -112,11 +108,13 @@ namespace IPH
                     pixels[i++] = matrix[y][x];
                 }
             }
+
+            // Calculate median
             double median = MedianFilter(pixels);
 
             // Calculate final hash
-            ulong rawHash = 0x0;
-            ulong one = 0x1;
+            ulong rawHash = 0;
+            ulong one = 1;
 
             for (int i = 0; i < pixels.Length; i++)
             {
@@ -142,7 +140,7 @@ namespace IPH
                 double sum = 0;
                 for (int j = 0; j < size; j++)
                 {
-                    sum += vector[j] * Math.Cos(i * Math.PI * (((double)j + 0.5d) / sizeD));
+                    sum += vector[j] * Math.Cos((double)i * Math.PI * (((double)j + 0.5d) / sizeD));
                 }
 
                 sum *= Math.Sqrt(2d / sizeD);
@@ -160,16 +158,24 @@ namespace IPH
 
         private static double MedianFilter(double[] array)
         {
-            Array.Sort(array);
-            int middle = (int)Math.Floor(array.Length / 2d);
-
-            if (array.Length % 2 != 0)
+            // Copy the array as we do not want to act on the original
+            double[] clonedArray = new double[array.Length];
+            for (int i = 0; i < clonedArray.Length; i++)
             {
-                return array[middle];
+                clonedArray[i] = array[i];
             }
 
-            double low = array[middle];
-            double high = array[middle + 1];
+            Array.Sort(clonedArray);
+
+            int middle = (int)Math.Floor(clonedArray.Length / 2d);
+
+            if (clonedArray.Length % 2 != 0)
+            {
+                return clonedArray[middle];
+            }
+
+            double low = clonedArray[middle];
+            double high = clonedArray[middle + 1];
             return (low + high) / 2d;
         }
 

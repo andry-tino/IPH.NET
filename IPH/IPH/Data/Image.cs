@@ -29,7 +29,7 @@ namespace IPH
                 throw new ArgumentNullException(nameof(path));
             }
 
-            if (File.Exists(path))
+            if (!File.Exists(path))
             {
                 throw new ArgumentException("Specified image could not be found!", nameof(path));
             }
