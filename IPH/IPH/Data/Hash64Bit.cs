@@ -32,6 +32,14 @@ namespace IPH
         }
 
         /// <summary>
+        /// To remove.
+        /// </summary>
+        public ulong Value
+        {
+            get { return this.hash; }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         public string Representation
