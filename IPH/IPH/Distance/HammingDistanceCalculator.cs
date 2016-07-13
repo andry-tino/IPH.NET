@@ -11,13 +11,14 @@ namespace IPH
     /// <summary>
     /// Class implementing an Hamming distance calculator between two hashes.
     /// </summary>
-    public class HammingDistanceCalculator : IDistanceCalculator
+    public class HammingDistanceCalculator : IDistanceCalculator<uint>
     {
         private readonly IHash hash1;
         private readonly IHash hash2;
 
         // Cached values
-        private double distance;
+        private bool distanceCalculated;
+        private uint distance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HammingDistanceCalculator"/> class.
@@ -43,19 +44,20 @@ namespace IPH
             this.hash1 = hash1;
             this.hash2 = hash2;
 
-            this.distance = -1;
+            this.distanceCalculated = false;
         }
 
         /// <summary>
         /// Gets the distance between the two hases.
         /// </summary>
-        public double Distance
+        public uint Distance
         {
             get
             {
-                if (this.distance == -1)
+                if (!this.distanceCalculated)
                 {
                     this.distance = this.GetDistance();
+                    this.distanceCalculated = true;
                 }
 
                 return this.distance;

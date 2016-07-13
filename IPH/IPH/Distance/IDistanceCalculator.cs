@@ -10,11 +10,11 @@ namespace IPH
     /// <summary>
     /// Interface abstracting common logic to algorithms used to compare hashes
     /// </summary>
-    public interface IDistanceCalculator
+    public interface IDistanceCalculator<T> where T : struct
     {
         /// <summary>
         /// Gets the distance between two <see cref="IHash"/>.
         /// </summary>
-        double Distance { get; }
+        T Distance { get; }
     }
 }
