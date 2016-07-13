@@ -27,7 +27,9 @@ namespace IPH.Program
             IHash hash1 = PH.CalculateHash(image1);
 
             HammingDistanceCalculator hdc = new HammingDistanceCalculator(hash, hash1);
-            double d = hdc.Distance;
+            var d = hdc.Distance;
+
+            var inThreshold = hdc.CompareTo(2);
 
             Console.WriteLine(hash.Representation);
         }

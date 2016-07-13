@@ -71,7 +71,7 @@ namespace IPH
         /// <returns>A positive number whether it is higher than other, a negative if less than other, 0 if equal.</returns>
         public int CompareTo(uint other)
         {
-            throw new NotImplementedException();
+            return (int)(this.Distance - other);
         }
 
         private static bool ValidateHashes(IHash hash1, IHash hash2)
