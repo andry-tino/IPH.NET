@@ -6,6 +6,7 @@
 namespace IPH
 {
     using System;
+    using System.Linq;
 
     /// <summary>
     /// Class implementing an Hamming distance calculator between two hashes.
@@ -34,6 +35,11 @@ namespace IPH
                 throw new ArgumentNullException(nameof(hash2));
             }
 
+            if (!ValidateHashes(hash1, hash2))
+            {
+                throw new ArgumentException("Hashes must be the same type!");
+            }
+
             this.hash1 = hash1;
             this.hash2 = hash2;
 
@@ -49,27 +55,43 @@ namespace IPH
             {
                 if (this.distance == -1)
                 {
-                    var h1 = this.hash1 as Hash64Bit;
-                    var h2 = this.hash2 as Hash64Bit;
-
-                    ulong v1 = h1.Value;
-                    ulong v2 = h2.Value;
-
-                    ulong x = v1 ^ v2;
-
-                    ulong m1 = 0x5555555555555555UL;
-                    ulong m2 = 0x3333333333333333UL;
-                    ulong h01 = 0x0101010101010101UL;
-                    ulong m4 = 0x0f0f0f0f0f0f0f0fUL;
-                    x -= (x >> 1) & m1;
-                    x = (x & m2) + ((x >> 2) & m2);
-                    x = (x + (x >> 4)) & m4;
-
-                    this.distance = (x * h01) >> 56;
+                    this.distance = this.GetDistance();
                 }
 
                 return this.distance;
             }
+        }
+
+        private static bool ValidateHashes(IHash hash1, IHash hash2)
+        {
+            Type hash1Type = hash1.GetType();
+            Type hash2Type = hash2.GetType();
+
+            int hash1Length = hash1.Stream.Count();
+            int hash2Length = hash2.Stream.Count();
+
+            return hash1Type.Equals(hash2Type) && hash1Length == hash2Length;
+        }
+
+        private uint GetDistance()
+        {
+            uint distance = 0;
+
+            for (int i = 0, l = this.hash1.Stream.Count(); i < l; i++)
+            {
+                uint b1 = this.hash1.Stream.ElementAt(i);
+                uint b2 = this.hash2.Stream.ElementAt(i);
+
+                uint x = b1 ^ b2;
+
+                while (x != 0)
+                {
+                    distance++;
+                    x &= x - 1;
+                }
+            }
+
+            return distance;
         }
     }
 }
