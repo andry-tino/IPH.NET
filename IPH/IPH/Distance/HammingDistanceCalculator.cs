@@ -64,6 +64,16 @@ namespace IPH
             }
         }
 
+        /// <summary>
+        /// Compares the distance with a provided value.
+        /// </summary>
+        /// <param name="other">The distance to compare to.</param>
+        /// <returns>A positive number whether it is higher than other, a negative if less than other, 0 if equal.</returns>
+        public int CompareTo(uint other)
+        {
+            throw new NotImplementedException();
+        }
+
         private static bool ValidateHashes(IHash hash1, IHash hash2)
         {
             Type hash1Type = hash1.GetType();
