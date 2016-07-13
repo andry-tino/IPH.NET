@@ -12,7 +12,8 @@ namespace IPH
     using System.IO;
     
     /// <summary>
-    /// Wrapper around <see cref="System.Drawing.Image"/> and <see cref="Matrix{T}"/>.
+    /// Class describing the image which can be provided as input of hashing algorithms 
+    /// implementing the <see cref="IHasher"/> interface.
     /// </summary>
     public class Image : IDisposable, ICloneable
     {

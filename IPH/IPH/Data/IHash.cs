@@ -9,17 +9,17 @@ namespace IPH
     using System.Collections.Generic;
 
     /// <summary>
-    /// 
+    /// Interface abstracting hashes with common logic.
     /// </summary>
     public interface IHash
     {
         /// <summary>
-        /// 
+        /// Gets the bytestream.
         /// </summary>
         IEnumerable<byte> Stream { get; }
 
         /// <summary>
-        /// 
+        /// Gets the string representation of the hash.
         /// </summary>
         string Representation { get; }
     }

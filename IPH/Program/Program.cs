@@ -18,14 +18,13 @@ namespace IPH.Program
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            Image image = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Baseline\IE11\25003.png");
-            Image image1 = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Output\IE11\25003.png");
+            Image image = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Baseline\IE11\25001.png");
+            Image image1 = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Output\IE11\25001.png");
 
-            PerceptualHasher PH = new PerceptualHasher(image);
-            PerceptualHasher PH1 = new PerceptualHasher(image1);
+            PerceptualHasher PH = new PerceptualHasher();
 
-            IHash hash = PH.Hash;
-            IHash hash1 = PH1.Hash;
+            IHash hash = PH.CalculateHash(image);
+            IHash hash1 = PH.CalculateHash(image1);
 
             HammingDistanceCalculator hdc = new HammingDistanceCalculator(hash, hash1);
             double d = hdc.Distance;

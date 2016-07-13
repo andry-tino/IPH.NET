@@ -9,14 +9,17 @@ namespace IPH
     using System.Collections.Generic;
 
     /// <summary>
-    /// 
+    /// A 64 bit hash.
     /// </summary>
     public class Hash64Bit : IHash
     {
-        private ulong hash;
+        private readonly ulong hash; // 64 bits (8 bytes) unsigned int
+
+        // Cached values
+        private IEnumerable<byte> stream;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="Hash64Bit"/> class.
         /// </summary>
         public Hash64Bit(ulong value)
         {
@@ -24,15 +27,23 @@ namespace IPH
         }
 
         /// <summary>
-        /// 
+        /// Gets the bytestream of the hash.
         /// </summary>
         public IEnumerable<byte> Stream
         {
-            get { return null; }
+            get
+            {
+                if (this.stream == null)
+                {
+                    this.stream = BitConverter.GetBytes(this.hash);
+                }
+
+                return this.stream;
+            }
         }
 
         /// <summary>
-        /// To remove.
+        /// TODO: to remove.
         /// </summary>
         public ulong Value
         {
@@ -40,7 +51,7 @@ namespace IPH
         }
 
         /// <summary>
-        /// 
+        /// Gets the string representation of the hash.
         /// </summary>
         public string Representation
         {

@@ -11,8 +11,12 @@ namespace IPH
     using MathNet.Numerics.LinearAlgebra;
 
     /// <summary>
-    /// 
+    /// Implementation of perceptual hash as per <see href="http://phash.org/"/>.
     /// </summary>
+    /// <remarks>
+    /// The implementation has been validated by comparing with 
+    /// algorithm <see href="https://github.com/jenssegers/imagehash/blob/master/src/Implementations/PerceptualHash.php"/>.
+    /// </remarks>
     public class PerceptualHasher : IHasher
     {
         private const int Size = 64;
@@ -22,46 +26,32 @@ namespace IPH
         private const double GreenLUMAFactor = 0.587d;
         private const double BlueLUMAFactor = 0.114d;
 
-        private readonly Image source;
-
         private Hash64Bit hash;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="PerceptualHasher"/> class.
         /// </summary>
-        /// <param name="image"></param>
-        public PerceptualHasher(Image image)
+        public PerceptualHasher()
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
-
-            this.source = image;
         }
 
         /// <summary>
-        /// Gets the hash.
+        /// Calculates the perceptual hash of an <see cref="Image"/>.
         /// </summary>
-        public IHash Hash
+        /// <param name="image">The <see cref="Image"/> to hash.</param>
+        /// <returns>The perceptual hash of the input <see cref="Image"/>.</returns>
+        public IHash CalculateHash(Image image)
         {
-            get
-            {
-                if (this.hash == null)
-                {
-                    this.Compute(out this.hash);
-                }
-
-                return this.hash;
-            }
+            this.Compute(out this.hash, image);
+            return this.hash;
         }
 
-        private void Compute(out Hash64Bit hash)
+        private void Compute(out Hash64Bit hash, Image source)
         {
             // Get a copy of the image we need to compute the hash on
             // but resized to a default dimension Size
             // Attention: this will alter the proportions, but it is fine
-            Image resizedImage = this.source.Resize(Size, Size);
+            Image resizedImage = source.Resize(Size, Size);
 
             // Define quantities
             double[] row = new double[Size];
