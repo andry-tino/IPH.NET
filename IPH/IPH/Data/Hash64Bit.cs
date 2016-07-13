@@ -43,14 +43,6 @@ namespace IPH
         }
 
         /// <summary>
-        /// TODO: to remove.
-        /// </summary>
-        public ulong Value
-        {
-            get { return this.hash; }
-        }
-
-        /// <summary>
         /// Gets the string representation of the hash.
         /// </summary>
         public string Representation
