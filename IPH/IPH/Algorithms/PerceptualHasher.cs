@@ -8,8 +8,6 @@ namespace IPH
     using System;
     using System.Collections.Generic;
 
-    using MathNet.Numerics.LinearAlgebra;
-
     /// <summary>
     /// Implementation of perceptual hash as per <see href="http://phash.org/"/>.
     /// </summary>
@@ -170,17 +168,6 @@ namespace IPH
         }
 
         #region Utilities
-
-        private static Matrix<RGBAColor> CreateRGBAMatrix(int rowsNumber, int colsNumber)
-        {
-            var matrixBuilder = Matrix<RGBAColor>.Build;
-            return matrixBuilder.Dense(rowsNumber, colsNumber);
-        }
-
-        private static Matrix<RGBAColor> CreateRGBAMatrix(int size)
-        {
-            return CreateRGBAMatrix(size, size);
-        }
 
         private static RGBAColor Color2RGBAColor(System.Drawing.Color color)
         {
