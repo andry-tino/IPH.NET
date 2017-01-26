@@ -97,18 +97,21 @@ namespace IPH
         /// <summary>
         /// Slices the image from the specified x coordinate for the specified width.
         /// </summary>
-        /// <param name="x"></param>
+        /// <param name="horizontalShift"></param>
         /// <param name="width"></param>
         /// <returns>A vertical slice.</returns>
-        public Image VerticalSlice(int x, int width)
+        /// <remarks>
+        /// If the rectangle exceeds, the slice is taken from right to left.
+        /// </remarks>
+        public Image VerticalSlice(int horizontalShift, int width)
         {
-            if (x < 0)
+            if (horizontalShift < 0)
             {
-                throw new ArgumentException(nameof(x), "Coordinate cannot be negative");
+                throw new ArgumentException(nameof(horizontalShift), "Coordinate cannot be negative");
             }
-            if (x > this.image.Width)
+            if (horizontalShift > this.image.Width)
             {
-                throw new ArgumentException(nameof(x), "Coordinate exceeds image boundaries");
+                throw new ArgumentException(nameof(horizontalShift), "Coordinate exceeds image boundaries");
             }
 
             if (width < 0)
@@ -122,6 +125,7 @@ namespace IPH
 
             // Note: Coordinates are 0 based!
 
+            int x = horizontalShift;
             int y = 0;
             int w = width;
             int h = this.image.Height;
@@ -130,7 +134,8 @@ namespace IPH
             int rectx2 = x + w;
             if (rectx2 > this.image.Width)
             {
-                w = this.image.Width - x;
+                //w = this.image.Width - x; // This will use residual width
+                x = this.image.Width - w; // This will make the rightmost slice
             }
 
             var rect = new Rectangle(x, y, w, h);
@@ -148,6 +153,11 @@ namespace IPH
         {
             return this.image.GetPixel(x, y);
         }
+
+        /// <summary>
+        /// Gets the pixel format.
+        /// </summary>
+        public PixelFormat PixelFormat => this.image.PixelFormat;
 
         /// <summary>
         /// Disposes the class.

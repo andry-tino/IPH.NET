@@ -95,6 +95,6 @@ namespace IPH.Program
             return result;
         }
 
-        private static IImagesComparer Comparer => new NormalComparer(threshold);
+        private static IImagesComparer Comparer => new MultipleVerticalSlicesComparer(threshold, 10);
     }
 }

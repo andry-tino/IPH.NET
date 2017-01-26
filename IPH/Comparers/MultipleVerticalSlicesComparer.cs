@@ -9,7 +9,7 @@ namespace IPH.Comparers
     using System.Collections.Generic;
 
     /// <summary>
-    /// Abstraction of comparing algorithms.
+    /// Slices the image inertical slices and compares eacof them.
     /// </summary>
     public class MultipleVerticalSlicesComparer : IImagesComparer
     {
@@ -57,7 +57,7 @@ namespace IPH.Comparers
 
             // Calculating the number of slices
             int realSlicesCount = (width % this.slicesCount > 0) ? this.slicesCount + 1 : this.slicesCount;
-            int sliceWidth = width % this.slicesCount;
+            int sliceWidth = width / this.slicesCount;
 
             // Calculating result on whole images
             var normalResult = AreSlicesSimilar(image1, image2, threshold);
@@ -72,7 +72,7 @@ namespace IPH.Comparers
                 Image slice2 = image2.VerticalSlice(x, sliceWidth);
 
                 var result = AreSlicesSimilar(slice1, slice2, threshold);
-                result.Description = $"Slice #{i = 1}";
+                result.Description = $"Slice #{i + 1}";
 
                 results.Add(result);
             }
