@@ -95,6 +95,50 @@ namespace IPH
         }
 
         /// <summary>
+        /// Slices the image from the specified x coordinate for the specified width.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="width"></param>
+        /// <returns>A vertical slice.</returns>
+        public Image VerticalSlice(int x, int width)
+        {
+            if (x < 0)
+            {
+                throw new ArgumentException(nameof(x), "Coordinate cannot be negative");
+            }
+            if (x > this.image.Width)
+            {
+                throw new ArgumentException(nameof(x), "Coordinate exceeds image boundaries");
+            }
+
+            if (width < 0)
+            {
+                throw new ArgumentException(nameof(width), "Width cannot be negative");
+            }
+            if (width > this.image.Width)
+            {
+                throw new ArgumentException(nameof(width), "Width exceeds image boundaries");
+            }
+
+            // Note: Coordinates are 0 based!
+
+            int y = 0;
+            int w = width;
+            int h = this.image.Height;
+
+            // Adjusting rectangle
+            int rectx2 = x + w;
+            if (rectx2 > this.image.Width)
+            {
+                w = this.image.Width - x;
+            }
+
+            var rect = new Rectangle(x, y, w, h);
+
+            return new Image(this.image.Clone(rect, this.image.PixelFormat));
+        }
+
+        /// <summary>
         /// Extract one pixel at a specific coordinate.
         /// </summary>
         /// <param name="x"></param>

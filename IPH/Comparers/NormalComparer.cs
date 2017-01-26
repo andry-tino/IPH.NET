@@ -12,7 +12,7 @@ namespace IPH.Comparers
     /// </summary>
     public class NormalComparer : IImagesComparer
     {
-        private uint threshold;
+        private readonly uint threshold;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NormalComparer"/> class.

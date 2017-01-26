@@ -6,6 +6,7 @@
 namespace IPH.Program
 {
     using System;
+    using System.Diagnostics;
 
     using IPH.Comparers;
 
@@ -15,7 +16,7 @@ namespace IPH.Program
     public class Program
     {
         private const uint threshold = 2;
-
+        
         /// <summary>
         /// The entry point.
         /// </summary>
@@ -53,8 +54,11 @@ namespace IPH.Program
                 return;
             }
 
-            var comparer = new NormalComparer(threshold);
-            var result = comparer.Compare(image1, image2);
+            TimeSpan elapsed;
+            var result = ComputeResult(image1, image2, out elapsed);
+
+            Console.WriteLine($"Operation completed in: {string.Format("{0:00}:{1:00}", elapsed.Seconds, elapsed.Milliseconds)}");
+            Console.WriteLine();
 
             Console.WriteLine(string.Format("Hash for image-1 is: {0}", result.Hash1.Representation));
             Console.WriteLine(string.Format("Hash for image-2 is: {0}", result.Hash2.Representation));
@@ -63,25 +67,34 @@ namespace IPH.Program
 
             Console.WriteLine(string.Format("Threshold comparison set to: {0} - Response: {1}", 
                 threshold, result.Result ? "OK" : "OOT (Out Of Threshold)"));
+
+            Console.WriteLine();
+            Console.WriteLine("Result printout: " + result.ToString());
+
+            if (result.DimensionalInfo != null)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Dimensions...");
+                foreach (var dimension in result.DimensionalInfo)
+                {
+                    Console.WriteLine(dimension.ToString());
+                }
+            }
         }
 
-        // For debugging purposes
-        public static void Main2(string[] args)
+        private static CompareResult ComputeResult(Image image1, Image image2, out TimeSpan elapsed)
         {
-            Image image = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Baseline\IE11\25001.png");
-            Image image1 = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Output\IE11\25001.png");
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
-            PerceptualHasher PH = new PerceptualHasher();
+            var result = Comparer.Compare(image1, image2);
 
-            IHash hash = PH.CalculateHash(image);
-            IHash hash1 = PH.CalculateHash(image1);
+            stopwatch.Stop();
+            elapsed = stopwatch.Elapsed;
 
-            HammingDistanceCalculator hdc = new HammingDistanceCalculator(hash, hash1);
-            var d = hdc.Distance;
-
-            var inThreshold = hdc.CompareTo(2);
-
-            Console.WriteLine(hash.Representation);
+            return result;
         }
+
+        private static IImagesComparer Comparer => new NormalComparer(threshold);
     }
 }
