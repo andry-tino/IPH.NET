@@ -144,6 +144,55 @@ namespace IPH
         }
 
         /// <summary>
+        /// Slices the image from the specified y coordinate for the specified width.
+        /// </summary>
+        /// <param name="verticalShift"></param>
+        /// <param name="height"></param>
+        /// <returns>A vertical slice.</returns>
+        /// <remarks>
+        /// If the rectangle exceeds, the slice is taken from right to left.
+        /// </remarks>
+        public Image OrizontalSlice(int verticalShift, int height)
+        {
+            if (verticalShift < 0)
+            {
+                throw new ArgumentException(nameof(verticalShift), "Coordinate cannot be negative");
+            }
+            if (verticalShift > this.image.Height)
+            {
+                throw new ArgumentException(nameof(verticalShift), "Coordinate exceeds image boundaries");
+            }
+
+            if (height < 0)
+            {
+                throw new ArgumentException(nameof(height), "Width cannot be negative");
+            }
+            if (height > this.image.Height)
+            {
+                throw new ArgumentException(nameof(height), "Width exceeds image boundaries");
+            }
+
+            // Note: Coordinates are 0 based!
+
+            int x = 0;
+            int y = verticalShift;
+            int w = this.image.Height;
+            int h = height;
+
+            // Adjusting rectangle
+            int recty2 = y + h;
+            if (recty2 > this.image.Height)
+            {
+                //h = this.image.Height - y; // This will use residual height
+                y = this.image.Height - h; // This will make the bottommost slice
+            }
+
+            var rect = new Rectangle(x, y, w, h);
+
+            return new Image(this.image.Clone(rect, this.image.PixelFormat));
+        }
+
+        /// <summary>
         /// Extract one pixel at a specific coordinate.
         /// </summary>
         /// <param name="x"></param>

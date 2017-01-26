@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="CompareResult.cs" />
     <Compile Include="IImagesComparer.cs" />
+    <Compile Include="MultipleSlicesComparer.cs" />
     <Compile Include="MultipleVerticalSlicesComparer.cs" />
     <Compile Include="NormalComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
