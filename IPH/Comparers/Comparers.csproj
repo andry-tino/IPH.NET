@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91B971D0-1E4D-480C-BF49-8BEC4D5CFBBA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{3620547C-CAEE-456E-8052-2DBD5E8DA4C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IPH.Program</RootNamespace>
-    <AssemblyName>IPH.Program</AssemblyName>
+    <RootNamespace>IPH.Comparers</RootNamespace>
+    <AssemblyName>IPH.Comparers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,17 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="CompareResult.cs" />
+    <Compile Include="IImagesComparer.cs" />
+    <Compile Include="NormalComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Comparers\Comparers.csproj">
-      <Project>{3620547c-caee-456e-8052-2dbd5e8da4c2}</Project>
-      <Name>Comparers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\IPH\IPH.csproj">
       <Project>{ef1a80c1-1957-48d7-bdfc-7f10b83e938c}</Project>
       <Name>IPH</Name>

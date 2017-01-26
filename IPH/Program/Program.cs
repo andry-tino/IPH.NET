@@ -7,13 +7,17 @@ namespace IPH.Program
 {
     using System;
 
+    using IPH.Comparers;
+
     /// <summary>
     /// 
     /// </summary>
     public class Program
     {
+        private const uint threshold = 2;
+
         /// <summary>
-        /// 
+        /// The entry point.
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args)
@@ -49,25 +53,19 @@ namespace IPH.Program
                 return;
             }
 
-            PerceptualHasher PH = new PerceptualHasher();
-            IHash hash1 = PH.CalculateHash(image1);
-            IHash hash2 = PH.CalculateHash(image2);
+            var comparer = new NormalComparer(threshold);
+            var result = comparer.Compare(image1, image2);
 
-            Console.WriteLine(string.Format("Hash for image-1 is: {0}", hash1.Representation));
-            Console.WriteLine(string.Format("Hash for image-2 is: {0}", hash2.Representation));
+            Console.WriteLine(string.Format("Hash for image-1 is: {0}", result.Hash1.Representation));
+            Console.WriteLine(string.Format("Hash for image-2 is: {0}", result.Hash2.Representation));
 
-            HammingDistanceCalculator hdc = new HammingDistanceCalculator(hash1, hash2);
-            var d = hdc.Distance;
-
-            Console.WriteLine(string.Format("Distance is: {0}", d));
-
-            uint threshold = 2;
-            var inThreshold = hdc.CompareTo(threshold);
+            Console.WriteLine(string.Format("Distance is: {0}", result.DistanceRepresentation));
 
             Console.WriteLine(string.Format("Threshold comparison set to: {0} - Response: {1}", 
-                threshold, inThreshold <= 0 ? "OK" : "OOT (Out Of Threshold)"));
+                threshold, result.Result ? "OK" : "OOT (Out Of Threshold)"));
         }
 
+        // For debugging purposes
         public static void Main2(string[] args)
         {
             Image image = new Image(@"C:\Users\antino\Desktop\Shared\Phone_A0_Standard\Baseline\IE11\25001.png");

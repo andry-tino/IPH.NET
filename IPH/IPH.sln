@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPH", "IPH\IPH.csproj", "{EF1A80C1-1957-48D7-BDFC-7F10B83E938C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.csproj", "{91B971D0-1E4D-480C-BF49-8BEC4D5CFBBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comparers", "Comparers\Comparers.csproj", "{3620547C-CAEE-456E-8052-2DBD5E8DA4C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{91B971D0-1E4D-480C-BF49-8BEC4D5CFBBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91B971D0-1E4D-480C-BF49-8BEC4D5CFBBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91B971D0-1E4D-480C-BF49-8BEC4D5CFBBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3620547C-CAEE-456E-8052-2DBD5E8DA4C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3620547C-CAEE-456E-8052-2DBD5E8DA4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3620547C-CAEE-456E-8052-2DBD5E8DA4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3620547C-CAEE-456E-8052-2DBD5E8DA4C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
