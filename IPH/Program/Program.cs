@@ -101,6 +101,8 @@ namespace IPH.Program
             {
 #if MVS_COMPARER
                 return new MultipleVerticalSlicesComparer(threshold, 10);
+#elif MHS_COMPARER
+                return new MultipleHorizontalSlicesComparer(threshold, 10);
 #else
                 return new NormalComparer(threshold);
 #endif
