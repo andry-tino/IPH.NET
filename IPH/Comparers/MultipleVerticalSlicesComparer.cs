@@ -13,7 +13,7 @@ namespace IPH.Comparers
     public class MultipleVerticalSlicesComparer : MultipleSlicesComparer
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NormalComparer"/> class.
+        /// Initializes a new instance of the <see cref="MultipleVerticalSlicesComparer"/> class.
         /// </summary>
         /// <param name="threshold"></param>
         public MultipleVerticalSlicesComparer(uint threshold, int slicesCount) 

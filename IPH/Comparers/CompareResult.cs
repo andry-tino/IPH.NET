@@ -11,7 +11,7 @@ namespace IPH.Comparers
     /// <summary>
     /// Information about the comparison result.
     /// </summary>
-    public sealed class CompareResult
+    public sealed class CompareResult : ICloneable
     {
         /// <summary>
         /// Gets or sets the hash on the first image.
@@ -51,6 +51,23 @@ namespace IPH.Comparers
         public override string ToString()
         {
             return $"{this.Description + " " ?? string.Empty}H1={this.Hash1.Representation} H2={this.Hash2.Representation} D={this.DistanceRepresentation} - {this.Result}";
+        }
+
+        /// <summary>
+        /// Shallow clones the results, without cloning the <see cref="DimensionalInfo"/>.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return new CompareResult()
+            {
+                Hash1 = this.Hash1,
+                Hash2 = this.Hash2,
+                DistanceRepresentation = this.DistanceRepresentation,
+                IntegerResult = this.IntegerResult,
+                Result = this.Result,
+                Description = this.Description
+            };
         }
     }
 }

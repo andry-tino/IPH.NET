@@ -16,6 +16,7 @@ namespace IPH.Program
     public class Program
     {
         private const uint threshold = 2;
+        private const int slicesCount = 10;
         
         /// <summary>
         /// The entry point.
@@ -100,9 +101,11 @@ namespace IPH.Program
             get
             {
 #if MVS_COMPARER
-                return new MultipleVerticalSlicesComparer(threshold, 10);
+                return new MultipleVerticalSlicesComparer(threshold, slicesCount);
 #elif MHS_COMPARER
-                return new MultipleHorizontalSlicesComparer(threshold, 10);
+                return new MultipleHorizontalSlicesComparer(threshold, slicesCount);
+#elif MCS_COMPARER
+                return new MultipleCrossSlicesComparer(threshold, slicesCount);
 #else
                 return new NormalComparer(threshold);
 #endif
