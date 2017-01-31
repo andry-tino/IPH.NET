@@ -192,6 +192,22 @@ namespace IPH
             return new Image(this.image.Clone(rect, this.image.PixelFormat));
         }
 
+#if DEBUG
+
+        /// <summary>
+        /// Saves the image to the specified path.
+        /// </summary>
+        /// <param name="path"></param>
+        public void SaveTo(string path)
+        {
+            using (var fstream = new FileStream(path, FileMode.CreateNew))
+            {
+                this.image.Save(fstream, ImageFormat.Png);
+            }
+        }
+
+#endif
+
         /// <summary>
         /// Extract one pixel at a specific coordinate.
         /// </summary>

@@ -80,6 +80,10 @@ namespace IPH.Comparers
             // Calculating result on whole images
             var normalResult = AreSlicesSimilar(image1, image2, threshold);
 
+#if DEBUG
+            string seed = string.Format("#{0:X6}", new Random().Next(0x1000000));
+#endif
+
             // Collecting results
             var results = new List<CompareResult>();
             for (int i = 0; i < realSlicesCount; i++)
@@ -93,6 +97,21 @@ namespace IPH.Comparers
                 result.Description = $"Slice #{i + 1}";
 
                 results.Add(result);
+
+#if DEBUG
+
+                if (Environment.GetEnvironmentVariable("IPH_DBGFOLDER") != null)
+                {
+                    if (!System.IO.Directory.Exists(Environment.GetEnvironmentVariable("IPH_DBGFOLDER")))
+                    {
+                        System.IO.Directory.CreateDirectory(Environment.GetEnvironmentVariable("IPH_DBGFOLDER"));
+                    }
+                    
+                    slice1.SaveTo(System.IO.Path.Combine(Environment.GetEnvironmentVariable("IPH_DBGFOLDER"), $"Img{seed}_S1-{i + 1}.png"));
+                    slice2.SaveTo(System.IO.Path.Combine(Environment.GetEnvironmentVariable("IPH_DBGFOLDER"), $"Img{seed}_S2-{i + 1}.png"));
+                }
+
+#endif
             }
 
             // We return always quantities relative to the whole image comparison, but Result will be influenced by slices
