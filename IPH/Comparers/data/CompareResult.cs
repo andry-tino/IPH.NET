@@ -24,9 +24,9 @@ namespace IPH.Comparers
         public IHash Hash2 { get; set; }
 
         /// <summary>
-        /// Gets or sets the string representation of the distance between the 2 images/hashes.
+        /// Gets or sets the distance between the 2 images/hashes.
         /// </summary>
-        public string DistanceRepresentation { get; set; }
+        public Distance Distance { get; set; }
 
         /// <summary>
         /// Gets or sets the comparison integer evaluation according to the <see cref="IComparable.CompareTo(object)"/> convention.
@@ -50,7 +50,7 @@ namespace IPH.Comparers
 
         public override string ToString()
         {
-            return $"{this.Description + " " ?? string.Empty}H1={this.Hash1.Representation} H2={this.Hash2.Representation} D={this.DistanceRepresentation} - {this.Result}";
+            return $"{this.Description + " " ?? string.Empty}H1={this.Hash1.Representation} H2={this.Hash2.Representation} D={this.Distance.StringRepresentation} - {this.Result}";
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace IPH.Comparers
             {
                 Hash1 = this.Hash1,
                 Hash2 = this.Hash2,
-                DistanceRepresentation = this.DistanceRepresentation,
+                Distance = this.Distance,
                 IntegerResult = this.IntegerResult,
                 Result = this.Result,
                 Description = this.Description

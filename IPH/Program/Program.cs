@@ -64,7 +64,7 @@ namespace IPH.Program
             Console.WriteLine(string.Format("Hash for image-1 is: {0}", result.Hash1.Representation));
             Console.WriteLine(string.Format("Hash for image-2 is: {0}", result.Hash2.Representation));
 
-            Console.WriteLine(string.Format("Distance is: {0}", result.DistanceRepresentation));
+            Console.WriteLine(string.Format("Distance is: {0}", result.Distance.StringRepresentation));
 
             Console.WriteLine(string.Format("Threshold comparison set to: {0} - Response: {1}", 
                 threshold, result.Result ? "OK" : "OOT (Out Of Threshold)"));

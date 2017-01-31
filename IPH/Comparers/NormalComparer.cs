@@ -53,7 +53,7 @@ namespace IPH.Comparers
             {
                 Hash1 = hash1,
                 Hash2 = hash2,
-                DistanceRepresentation = d.ToString(),
+                Distance = new Distance(d),
                 IntegerResult = inThreshold,
                 Result = inThreshold <= 0
             };

@@ -94,7 +94,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompareResult.cs" />
+    <Compile Include="aggregation\ICompareResultAggregator.cs" />
+    <Compile Include="aggregation\MaxDistanceAggregator.cs" />
+    <Compile Include="data\CompareResult.cs" />
+    <Compile Include="data\Distance.cs" />
     <Compile Include="IImagesComparer.cs" />
     <Compile Include="MultipleCrossSlicesComparer.cs" />
     <Compile Include="MultipleHorizontalSlicesComparer.cs" />

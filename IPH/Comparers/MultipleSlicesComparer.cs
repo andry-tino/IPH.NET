@@ -16,6 +16,8 @@ namespace IPH.Comparers
         private readonly uint threshold;
         private readonly int slicesCount;
 
+        private ICompareResultAggregator aggregator;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NormalComparer"/> class.
         /// </summary>
@@ -29,6 +31,24 @@ namespace IPH.Comparers
 
             this.threshold = threshold;
             this.slicesCount = slicesCount;
+        }
+
+        /// <summary>
+        /// Gets or sets the aggregator.
+        /// </summary>
+        public ICompareResultAggregator Aggregator
+        {
+            get
+            {
+                if (this.aggregator == null)
+                {
+                    this.aggregator = new MaxDistanceAggregator();
+                }
+
+                return this.aggregator;
+            }
+
+            set { this.aggregator = value; }
         }
         
         /// <summary>
@@ -75,7 +95,8 @@ namespace IPH.Comparers
                 results.Add(result);
             }
 
-            // Reviewing results
+            // We return always quantities relative to the whole image comparison, but Result will be influenced by slices
+
             foreach (var result in results)
             {
                 if (!result.Result)
@@ -84,7 +105,7 @@ namespace IPH.Comparers
                     {
                         Hash1 = normalResult.Hash1,
                         Hash2 = normalResult.Hash2,
-                        DistanceRepresentation = normalResult.DistanceRepresentation,
+                        Distance = normalResult.Distance,
                         IntegerResult = normalResult.IntegerResult,
                         Result = false,
                         DimensionalInfo = results,
@@ -97,7 +118,7 @@ namespace IPH.Comparers
             {
                 Hash1 = normalResult.Hash1,
                 Hash2 = normalResult.Hash2,
-                DistanceRepresentation = normalResult.DistanceRepresentation,
+                Distance = normalResult.Distance,
                 IntegerResult = normalResult.IntegerResult,
                 Result = normalResult.Result,
                 DimensionalInfo = results

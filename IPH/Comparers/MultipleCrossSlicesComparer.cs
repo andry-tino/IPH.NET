@@ -55,6 +55,7 @@ namespace IPH.Comparers
             // Flatten results
             // Vertical and horizontal will have the same values, we take one
             CompareResult results = vResults.Clone() as CompareResult;
+            results.Result = vResults.Result && hResults.Result;
 
             Func<CompareResult, string, CompareResult> f = delegate (CompareResult result, string prefix) 
             {
