@@ -103,7 +103,7 @@
     <Compile Include="Algorithms\IHasher.cs" />
     <Compile Include="Data\Image.cs" />
     <Compile Include="Iph.cs" />
-    <Compile Include="Algorithms\PerceptualHasher.cs" />
+    <Compile Include="Algorithms\KlingerDCTBasedPerceptualHasher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

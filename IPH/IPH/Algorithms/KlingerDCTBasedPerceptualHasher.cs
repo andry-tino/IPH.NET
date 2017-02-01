@@ -15,7 +15,7 @@ namespace IPH
     /// The implementation has been validated by comparing with 
     /// algorithm <see href="https://github.com/jenssegers/imagehash/blob/master/src/Implementations/PerceptualHash.php"/>.
     /// </remarks>
-    public class PerceptualHasher : IHasher
+    public class KlingerDCTBasedPerceptualHasher : IHasher
     {
         private const int Size = 64;
         private const int SubSize = 8; // Must be < Size
@@ -27,9 +27,9 @@ namespace IPH
         private Hash64Bit hash;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PerceptualHasher"/> class.
+        /// Initializes a new instance of the <see cref="KlingerDCTBasedPerceptualHasher"/> class.
         /// </summary>
-        public PerceptualHasher()
+        public KlingerDCTBasedPerceptualHasher()
         {
         }
 

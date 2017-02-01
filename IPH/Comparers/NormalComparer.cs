@@ -40,7 +40,7 @@ namespace IPH.Comparers
                 throw new ArgumentNullException(nameof(image2));
             }
 
-            PerceptualHasher PH = new PerceptualHasher();
+            var PH = new KlingerDCTBasedPerceptualHasher();
             IHash hash1 = PH.CalculateHash(image1);
             IHash hash2 = PH.CalculateHash(image2);
 
