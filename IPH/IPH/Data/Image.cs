@@ -107,20 +107,20 @@ namespace IPH
         {
             if (horizontalShift < 0)
             {
-                throw new ArgumentException(nameof(horizontalShift), "Coordinate cannot be negative");
+                throw new ArgumentException("Coordinate cannot be negative", nameof(horizontalShift));
             }
             if (horizontalShift > this.image.Width)
             {
-                throw new ArgumentException(nameof(horizontalShift), "Coordinate exceeds image boundaries");
+                throw new ArgumentException("Coordinate exceeds image boundaries", nameof(horizontalShift));
             }
 
             if (width < 0)
             {
-                throw new ArgumentException(nameof(width), "Width cannot be negative");
+                throw new ArgumentException("Width cannot be negative", nameof(width));
             }
             if (width > this.image.Width)
             {
-                throw new ArgumentException(nameof(width), "Width exceeds image boundaries");
+                throw new ArgumentException("Width exceeds image boundaries", nameof(width));
             }
 
             // Note: Coordinates are 0 based!
@@ -156,20 +156,20 @@ namespace IPH
         {
             if (verticalShift < 0)
             {
-                throw new ArgumentException(nameof(verticalShift), "Coordinate cannot be negative");
+                throw new ArgumentException("Coordinate cannot be negative", nameof(verticalShift));
             }
             if (verticalShift > this.image.Height)
             {
-                throw new ArgumentException(nameof(verticalShift), "Coordinate exceeds image boundaries");
+                throw new ArgumentException("Coordinate exceeds image boundaries", nameof(verticalShift));
             }
 
             if (height < 0)
             {
-                throw new ArgumentException(nameof(height), "Width cannot be negative");
+                throw new ArgumentException("Width cannot be negative", nameof(height));
             }
             if (height > this.image.Height)
             {
-                throw new ArgumentException(nameof(height), "Width exceeds image boundaries");
+                throw new ArgumentException("Width exceeds image boundaries", nameof(height));
             }
 
             // Note: Coordinates are 0 based!
