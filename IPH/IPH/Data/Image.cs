@@ -131,8 +131,8 @@ namespace IPH
             int h = this.image.Height;
 
             // Adjusting rectangle
-            int rectx2 = x + w;
-            if (rectx2 > this.image.Width)
+            int rectx2 = x + w - 1;
+            if (rectx2 > this.image.Width - 1)
             {
                 //w = this.image.Width - x; // This will use residual width
                 x = this.image.Width - w; // This will make the rightmost slice
@@ -150,7 +150,7 @@ namespace IPH
         /// <param name="height"></param>
         /// <returns>A vertical slice.</returns>
         /// <remarks>
-        /// If the rectangle exceeds, the slice is taken from right to left.
+        /// If the rectangle exceeds, the slice is taken from top to bottom.
         /// </remarks>
         public Image OrizontalSlice(int verticalShift, int height)
         {
@@ -180,8 +180,8 @@ namespace IPH
             int h = height;
 
             // Adjusting rectangle
-            int recty2 = y + h;
-            if (recty2 > this.image.Height)
+            int recty2 = y + h - 1;
+            if (recty2 > this.image.Height - 1)
             {
                 //h = this.image.Height - y; // This will use residual height
                 y = this.image.Height - h; // This will make the bottommost slice
