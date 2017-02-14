@@ -22,9 +22,9 @@ namespace IPH.Resemble.Checking
         /// </summary>
         /// <param name="d1"></param>
         /// <param name="d2"></param>
-        public ContrastingChecker(PixelColorTolerance d1, PixelColorTolerance d2)
+        public ContrastingChecker(PixelColor d1, PixelColor d2)
         {
-            this.Result = Math.Abs(d1.Brightness - d2.Brightness) > PixelColorTolerance.Tolerance.MaximumBrightness;
+            this.Result = Math.Abs(d1.Brightness - d2.Brightness) > PixelColor.Tolerance.MaximumBrightness;
         }
     }
 }

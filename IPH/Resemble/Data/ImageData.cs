@@ -25,6 +25,11 @@ namespace IPH.Resemble
         }
 
         /// <summary>
+        /// Gets the length of the stream.
+        /// </summary>
+        public int Length => this.stream.Length;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ImageData"/> class.
         /// </summary>
         public ImageData(Bitmap image)

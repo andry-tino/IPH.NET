@@ -23,15 +23,15 @@ namespace IPH.Resemble.Checking
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <param name="color"></param>
-        public ColorSimilarChecker(int a, int b, PixelColorTolerance.Color color)
+        public ColorSimilarChecker(double a, double b, PixelColor.Color color)
         {
-            int absDiff = Math.Abs(a - b);
+            double absDiff = Math.Abs(a - b);
 
             if (a == b)
             {
                 this.Result = true;
             }
-            else if (absDiff < PixelColorTolerance.Tolerance[color])
+            else if (absDiff < PixelColor.Tolerance[color])
             {
                 this.Result = true;
             }

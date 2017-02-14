@@ -12,6 +12,7 @@ namespace IPH.Resemble
     /// </summary>
     public class PixelColor
     {
+        private static PixelColor targetPixel;
         private static PixelColor errorPixelColor;
         private static PixelColor tolerance;
 
@@ -19,43 +20,43 @@ namespace IPH.Resemble
         /// The red channel.
         /// Between 0 and 255.
         /// </summary>
-        public int Red { get; set; }
+        public double Red { get; set; }
 
         /// <summary>
         /// The green channel.
         /// Between 0 and 255.
         /// </summary>
-        public int Green { get; set; }
+        public double Green { get; set; }
 
         /// <summary>
         /// The blue channel.
         /// Between 0 and 255.
         /// </summary>
-        public int Blue { get; set; }
+        public double Blue { get; set; }
 
         /// <summary>
         /// The alpha channel.
         /// Between 0 and 255.
         /// </summary>
-        public int Alpha { get; set; }
+        public double Alpha { get; set; }
 
         /// <summary>
         /// The minimum brightness.
         /// Between 0 and 255.
         /// </summary>
-        public int MinimumBrightness { get; set; }
+        public double MinimumBrightness { get; set; }
 
         /// <summary>
         /// The maximum brightness.
         /// Between 0 and 255.
         /// </summary>
-        public int MaximumBrightness { get; set; }
+        public double MaximumBrightness { get; set; }
 
         /// <summary>
         /// The brightness.
         /// Between 0 and 255.
         /// </summary>
-        public int Brightness { get; set; }
+        public double Brightness { get; set; }
 
         /// <summary>
         /// The brightness.
@@ -75,7 +76,7 @@ namespace IPH.Resemble
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public int this[Color index]
+        public double this[Color index]
         {
             get
             {
@@ -94,6 +95,28 @@ namespace IPH.Resemble
         }
 
         #region Configuration
+
+        /// <summary>
+        /// The singleton instance of error pixel color.
+        /// </summary>
+        public static PixelColor TargetPixel
+        {
+            get
+            {
+                if (targetPixel == null)
+                {
+                    targetPixel = new PixelColor()
+                    {
+                        Red = 0,
+                        Green = 0,
+                        Blue = 0,
+                        Alpha = 0
+                    };
+                }
+
+                return targetPixel;
+            }
+        }
 
         /// <summary>
         /// The singleton instance of error pixel color.

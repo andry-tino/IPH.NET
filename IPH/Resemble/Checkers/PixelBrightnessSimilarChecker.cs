@@ -22,10 +22,10 @@ namespace IPH.Resemble.Checking
         /// </summary>
         /// <param name="d1"></param>
         /// <param name="d2"></param>
-        public PixelBrightnessSimilarChecker(PixelColorTolerance d1, PixelColorTolerance d2)
+        public PixelBrightnessSimilarChecker(PixelColor d1, PixelColor d2)
         {
-            var alpha = new ColorSimilarChecker(d1.Alpha, d2.Alpha, PixelColorTolerance.Color.Alpha).Result;
-            var brightness = new ColorSimilarChecker(d1.Brightness, d2.Brightness, PixelColorTolerance.Color.MinBright).Result;
+            var alpha = new ColorSimilarChecker(d1.Alpha, d2.Alpha, PixelColor.Color.Alpha).Result;
+            var brightness = new ColorSimilarChecker(d1.Brightness, d2.Brightness, PixelColor.Color.MinBright).Result;
 
             this.Result = alpha && brightness;
         }

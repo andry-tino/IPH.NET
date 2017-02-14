@@ -21,7 +21,7 @@ namespace IPH.Resemble
         /// <param name="green"></param>
         /// <param name="blue"></param>
         /// <returns></returns>
-        public static double GetBrightness(int red, int green, int blue)
+        public static double GetBrightness(double red, double green, double blue)
         {
             return 0.3 * red + 0.59 * green + 0.11 * blue;
         }
@@ -33,7 +33,7 @@ namespace IPH.Resemble
         /// <param name="green"></param>
         /// <param name="blue"></param>
         /// <returns></returns>
-        public static double GetHue(int red, int green, int blue)
+        public static double GetHue(double red, double green, double blue)
         {
             double r = red / 255;
             double g = green / 255;
@@ -69,6 +69,46 @@ namespace IPH.Resemble
             }
 
             return h;
+        }
+
+        /// <summary>
+        /// Adds hue info to a <see cref="PixelColor"/>.
+        /// </summary>
+        /// <param name="pixel"></param>
+        public static void AddHueInfo(this PixelColor pixel)
+        {
+            pixel.Hue = GetHue(pixel.Red, pixel.Green, pixel.Blue);
+        }
+
+        /// <summary>
+        /// Adds brightness info to a <see cref="PixelColor"/>.
+        /// </summary>
+        /// <param name="pixel"></param>
+        public static void AddBrightnessInfo(this PixelColor pixel)
+        {
+            pixel.Brightness = GetBrightness(pixel.Red, pixel.Green, pixel.Blue); // Corrected lightness
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="destination"></param>
+        /// <param name="stream"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public static bool GetPixelInfo(this PixelColor destination, ImageData stream, int offset)
+        {
+            if (stream.Length > offset)
+            {
+                destination.Red = stream[offset];
+                destination.Green = stream[offset + 1];
+                destination.Blue = stream[offset + 2];
+                destination.Alpha = stream[offset + 3];
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

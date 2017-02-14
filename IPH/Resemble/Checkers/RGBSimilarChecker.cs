@@ -25,10 +25,10 @@ namespace IPH.Resemble.Checking
         public RGBSimilarChecker(PixelColor d1, PixelColor d2)
         {
             this.Result = 
-                new ColorSimilarChecker(d1.Red, d2.Red, PixelColorTolerance.Color.Red).Result && 
-                new ColorSimilarChecker(d1.Green, d2.Green, PixelColorTolerance.Color.Green).Result && 
-                new ColorSimilarChecker(d1.Blue, d2.Blue, PixelColorTolerance.Color.Blue).Result && 
-                new ColorSimilarChecker(d1.Alpha, d2.Alpha, PixelColorTolerance.Color.Alpha).Result;
+                new ColorSimilarChecker(d1.Red, d2.Red, PixelColor.Color.Red).Result && 
+                new ColorSimilarChecker(d1.Green, d2.Green, PixelColor.Color.Green).Result && 
+                new ColorSimilarChecker(d1.Blue, d2.Blue, PixelColor.Color.Blue).Result && 
+                new ColorSimilarChecker(d1.Alpha, d2.Alpha, PixelColor.Color.Alpha).Result;
         }
     }
 }
