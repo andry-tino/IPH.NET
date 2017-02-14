@@ -41,13 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Checkers\ColorSimilarChecker.cs" />
+    <Compile Include="Checkers\ContrastingChecker.cs" />
+    <Compile Include="Checkers\IChecker.cs" />
+    <Compile Include="Checkers\PixelBrightnessSimilarChecker.cs" />
+    <Compile Include="Checkers\RGBSameChecker.cs" />
+    <Compile Include="Checkers\RGBSimilarChecker.cs" />
     <Compile Include="ColorsDistance.cs" />
     <Compile Include="Data\ImageData.cs" />
     <Compile Include="Data\PixelColor.cs" />
     <Compile Include="Data\PixelColorTolerance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolSet.cs" />
+    <Compile Include="Transformations\FlatDifferenceIntensity.cs" />
     <Compile Include="Transformations\FlatTransform.cs" />
     <Compile Include="Transformations\IPixelTransform.cs" />
+    <Compile Include="Transformations\MovementDifferenceIntensity.cs" />
+    <Compile Include="Transformations\MovementTransform.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
