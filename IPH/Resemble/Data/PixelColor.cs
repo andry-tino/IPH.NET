@@ -13,6 +13,7 @@ namespace IPH.Resemble
     public class PixelColor
     {
         private static PixelColor errorPixelColor;
+        private static PixelColor tolerance;
 
         /// <summary>
         /// The red channel.
@@ -39,15 +40,60 @@ namespace IPH.Resemble
         public int Alpha { get; set; }
 
         /// <summary>
+        /// The minimum brightness.
+        /// Between 0 and 255.
+        /// </summary>
+        public int MinimumBrightness { get; set; }
+
+        /// <summary>
+        /// The maximum brightness.
+        /// Between 0 and 255.
+        /// </summary>
+        public int MaximumBrightness { get; set; }
+
+        /// <summary>
+        /// The brightness.
+        /// Between 0 and 255.
+        /// </summary>
+        public int Brightness { get; set; }
+
+        /// <summary>
+        /// The brightness.
+        /// Between 0 and 255.
+        /// </summary>
+        public double Hue { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PixelColor"/> class.
         /// </summary>
         public PixelColor()
         {
-            this.Red = 255;
-            this.Green = 0;
-            this.Blue = 255;
-            this.Alpha = 255;
         }
+
+        /// <summary>
+        /// Gets a dimension basing on the input <see cref="Color"/>.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public int this[Color index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case Color.Red: return this.Red;
+                    case Color.Green: return this.Green;
+                    case Color.Blue: return this.Blue;
+                    case Color.Alpha: return this.Red;
+                    case Color.Bright: return this.Brightness;
+                    case Color.MinBright: return this.MinimumBrightness;
+                    case Color.MaxBright: return this.MaximumBrightness;
+                    default: throw new InvalidOperationException("Unrecognized color");
+                }
+            }
+        }
+
+        #region Configuration
 
         /// <summary>
         /// The singleton instance of error pixel color.
@@ -58,11 +104,61 @@ namespace IPH.Resemble
             {
                 if (errorPixelColor == null)
                 {
-                    errorPixelColor = new PixelColor();
+                    errorPixelColor = new PixelColor()
+                    {
+                        Red = 255,
+                        Green = 0,
+                        Blue = 255,
+                        Alpha = 255
+                    };
                 }
 
                 return errorPixelColor;
             }
         }
+
+        /// <summary>
+        /// The singleton instance of tolerance.
+        /// </summary>
+        public static PixelColor Tolerance
+        {
+            get
+            {
+                if (tolerance == null)
+                {
+                    tolerance = new PixelColor()
+                    {
+                        Red = 16,
+                        Green = 16,
+                        Blue = 16,
+                        Alpha = 16,
+                        MinimumBrightness = 16,
+                        MaximumBrightness = 240
+                    };
+                }
+
+                return tolerance;
+            }
+        }
+
+        #endregion
+
+        #region Types
+
+        /// <summary>
+        /// The colors in order to index tolerance values.
+        /// </summary>
+        public enum Color
+        {
+            Red,
+            Green,
+            Blue,
+            Alpha,
+            Bright,
+            MinBright,
+            MaxBright
+        }
+
+        #endregion
     }
 }
