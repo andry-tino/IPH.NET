@@ -48,11 +48,9 @@ namespace IPH.Resemble.Transformation
                 throw new ArgumentNullException(nameof(d2));
             }
 
-            var errorPixelColor = new PixelColor();
-
-            stream[offset] = errorPixelColor.Red;
-            stream[offset + 1] = errorPixelColor.Green;
-            stream[offset + 2] = errorPixelColor.Blue;
+            stream[offset] = PixelColor.ErrorPixelColor.Red;
+            stream[offset + 1] = PixelColor.ErrorPixelColor.Green;
+            stream[offset + 2] = PixelColor.ErrorPixelColor.Blue;
             stream[offset + 3] = new ColorsDistance(d1, d2).Value;
         }
     }

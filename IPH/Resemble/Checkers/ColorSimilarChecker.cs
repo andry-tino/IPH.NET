@@ -31,7 +31,7 @@ namespace IPH.Resemble.Checking
             {
                 this.Result = true;
             }
-            else if (absDiff < new PixelColorTolerance()[color])
+            else if (absDiff < PixelColorTolerance.Tolerance[color])
             {
                 this.Result = true;
             }

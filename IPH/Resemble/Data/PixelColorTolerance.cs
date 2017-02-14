@@ -12,6 +12,8 @@ namespace IPH.Resemble
     /// </summary>
     public class PixelColorTolerance : PixelColor
     {
+        private static PixelColorTolerance tolerance;
+
         /// <summary>
         /// The minimum brightness.
         /// Between 0 and 255.
@@ -63,6 +65,19 @@ namespace IPH.Resemble
                     case Color.MaxBright: return this.MaximumBrightness;
                     default: throw new InvalidOperationException("Unrecognized color");
                 }
+            }
+        }
+
+        public static PixelColorTolerance Tolerance
+        {
+            get
+            {
+                if (tolerance == null)
+                {
+                    tolerance = new PixelColorTolerance();
+                }
+
+                return tolerance;
             }
         }
 

@@ -24,7 +24,7 @@ namespace IPH.Resemble.Checking
         /// <param name="d2"></param>
         public ContrastingChecker(PixelColorTolerance d1, PixelColorTolerance d2)
         {
-            this.Result = Math.Abs(d1.Brightness - d2.Brightness) > new PixelColorTolerance().MaximumBrightness;
+            this.Result = Math.Abs(d1.Brightness - d2.Brightness) > PixelColorTolerance.Tolerance.MaximumBrightness;
         }
     }
 }

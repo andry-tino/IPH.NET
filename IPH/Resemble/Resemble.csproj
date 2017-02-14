@@ -44,6 +44,7 @@
     <Compile Include="Checkers\ColorSimilarChecker.cs" />
     <Compile Include="Checkers\ContrastingChecker.cs" />
     <Compile Include="Checkers\IChecker.cs" />
+    <Compile Include="Checkers\PixelAntialiasedChecker.cs" />
     <Compile Include="Checkers\PixelBrightnessSimilarChecker.cs" />
     <Compile Include="Checkers\RGBSameChecker.cs" />
     <Compile Include="Checkers\RGBSimilarChecker.cs" />

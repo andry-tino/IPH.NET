@@ -48,13 +48,11 @@ namespace IPH.Resemble.Transformation
                 throw new ArgumentNullException(nameof(d2));
             }
 
-            var errorPixelColor = new PixelColor();
-
             double ratio = new ColorsDistance(d1, d2).Value / 255 * 0.8;
 
-            stream[offset] = ((1 - ratio) * (d2.Red * (errorPixelColor.Red / 255)) + ratio * errorPixelColor.Red);
-            stream[offset + 1] = ((1 - ratio) * (d2.Green * (errorPixelColor.Green / 255)) + ratio * errorPixelColor.Green);
-            stream[offset + 2] = ((1 - ratio) * (d2.Blue * (errorPixelColor.Blue / 255)) + ratio * errorPixelColor.Blue);
+            stream[offset] = ((1 - ratio) * (d2.Red * (PixelColor.ErrorPixelColor.Red / 255)) + ratio * PixelColor.ErrorPixelColor.Red);
+            stream[offset + 1] = ((1 - ratio) * (d2.Green * (PixelColor.ErrorPixelColor.Green / 255)) + ratio * PixelColor.ErrorPixelColor.Green);
+            stream[offset + 2] = ((1 - ratio) * (d2.Blue * (PixelColor.ErrorPixelColor.Blue / 255)) + ratio * PixelColor.ErrorPixelColor.Blue);
             stream[offset + 3] = d2.Alpha;
         }
     }

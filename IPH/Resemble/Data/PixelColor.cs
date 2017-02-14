@@ -12,6 +12,8 @@ namespace IPH.Resemble
     /// </summary>
     public class PixelColor
     {
+        private static PixelColor errorPixelColor;
+
         /// <summary>
         /// The red channel.
         /// Between 0 and 255.
@@ -45,6 +47,22 @@ namespace IPH.Resemble
             this.Green = 0;
             this.Blue = 255;
             this.Alpha = 255;
+        }
+
+        /// <summary>
+        /// The singleton instance of error pixel color.
+        /// </summary>
+        public static PixelColor ErrorPixelColor
+        {
+            get
+            {
+                if (errorPixelColor == null)
+                {
+                    errorPixelColor = new PixelColor();
+                }
+
+                return errorPixelColor;
+            }
         }
     }
 }
