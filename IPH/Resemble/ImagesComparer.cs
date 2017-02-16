@@ -17,21 +17,48 @@ namespace IPH.Resemble
     /// </summary>
     public class ImagesComparer
     {
-        private const int LargeImageThreshold = 1200;
-        private const bool IgnoreAntialiasing = false;
-        private const bool IgnoreColors = false;
-        private const bool ScaleToSameSize = false; // TBR
-
         private IPixelTransform errorPixelTransform;
 
         private AlgorithmData data;
 
-        public ImagesComparer(IPixelTransform errorPixelTransform = null)
+        public ImagesComparer()
         {
-            if (errorPixelTransform == null)
+            this.LargeImageThreshold = 1200;
+            this.IgnoreAntialiasing = false;
+            this.IgnoreColors = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int LargeImageThreshold { get; set; }
+
+        /// <summary>
+        /// Gets or sets a flag indicating whether antialiasing should be ignored when comparing.
+        /// </summary>
+        public bool IgnoreAntialiasing { get; set; }
+
+        /// <summary>
+        /// Gets or sets a flag indicating whether colors should be ignored when comparing.
+        /// </summary>
+        public bool IgnoreColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error pixel transform to use.
+        /// </summary>
+        public IPixelTransform ErrorPixelTransform
+        {
+            get
             {
-                this.errorPixelTransform = new FlatTransform();
+                if (this.errorPixelTransform == null)
+                {
+                    this.errorPixelTransform = new FlatTransform();
+                }
+
+                return this.errorPixelTransform;
             }
+
+            set { this.errorPixelTransform = value; }
         }
 
         /// <summary>
