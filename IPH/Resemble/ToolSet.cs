@@ -90,6 +90,39 @@ namespace IPH.Resemble
         }
 
         /// <summary>
+        /// The pixel transparency;
+        /// </summary>
+        public static double PixelTransparency => 1;
+
+        /// <summary>
+        /// Copies a pixel.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="offset"></param>
+        /// <param name="pixel"></param>
+        public static void CopyPixel(ImageData stream, int offset, PixelColor pixel)
+        {
+            stream[offset] = pixel.Red;
+            stream[offset + 1] = pixel.Green;
+            stream[offset + 2] = pixel.Blue;
+            stream[offset + 3] = pixel.Alpha * PixelTransparency;
+        }
+
+        /// <summary>
+        /// Copies the gray channel.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="offset"></param>
+        /// <param name="pixel"></param>
+        public static void CopyGrayScalePixel(ImageData stream, int offset, PixelColor pixel)
+        {
+            stream[offset] = pixel.Brightness; // Red
+            stream[offset + 1] = pixel.Brightness; // Green
+            stream[offset + 2] = pixel.Brightness; // Blue
+            stream[offset + 3] = pixel.Alpha * PixelTransparency; // Alpha
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="destination"></param>
@@ -109,6 +142,23 @@ namespace IPH.Resemble
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Loops.
+        /// </summary>
+        /// <param name="w"></param>
+        /// <param name="h"></param>
+        /// <param name="callback"></param>
+        public static void Loop(int width, int height, Action<int, int> callback)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    callback(x, y);
+                }
+            }
         }
     }
 }

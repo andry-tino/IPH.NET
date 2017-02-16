@@ -25,9 +25,14 @@ namespace IPH.Resemble
         }
 
         /// <summary>
-        /// Gets the length of the stream.
+        /// The width of the image.
         /// </summary>
-        public int Length => this.stream.Length;
+        public int Width { get; private set; }
+
+        /// <summary>
+        /// The height of the image.
+        /// </summary>
+        public int Height { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageData"/> class.
@@ -38,6 +43,9 @@ namespace IPH.Resemble
             {
                 throw new ArgumentNullException(nameof(image));
             }
+
+            this.Width = image.Width;
+            this.Height = image.Height;
 
             this.stream = new double[4 * image.Width * image.Height];
 
@@ -52,5 +60,10 @@ namespace IPH.Resemble
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the length of the stream.
+        /// </summary>
+        public int Length => this.stream.Length;
     }
 }

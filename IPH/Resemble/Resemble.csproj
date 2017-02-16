@@ -49,8 +49,11 @@
     <Compile Include="Checkers\RGBSameChecker.cs" />
     <Compile Include="Checkers\RGBSimilarChecker.cs" />
     <Compile Include="ColorsDistance.cs" />
+    <Compile Include="Data\AlgorithmData.cs" />
+    <Compile Include="Data\DifferenceBounds.cs" />
     <Compile Include="Data\ImageData.cs" />
     <Compile Include="Data\PixelColor.cs" />
+    <Compile Include="ImagesComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolSet.cs" />
     <Compile Include="Transformations\FlatDifferenceIntensity.cs" />

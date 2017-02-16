@@ -65,11 +65,16 @@ namespace IPH.Resemble
         public double Hue { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PixelColor"/> class.
+        /// The amount of white.
+        /// Between 0 and 255.
         /// </summary>
-        public PixelColor()
-        {
-        }
+        public double White { get; set; }
+
+        /// <summary>
+        /// The amount of black.
+        /// Between 0 and 255.
+        /// </summary>
+        public double Black { get; set; }
 
         /// <summary>
         /// Gets a dimension basing on the input <see cref="Color"/>.
