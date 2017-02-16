@@ -44,9 +44,15 @@ namespace IPH.Comparers
             {
                 throw new ArgumentNullException(nameof(image1));
             }
+
             if (image2 == null)
             {
                 throw new ArgumentNullException(nameof(image2));
+            }
+
+            if (image1.Width != image2.Width || image1.Height != image2.Height)
+            {
+                throw new ArgumentException("Images must have the same size");
             }
 
             CompareResult vResults = this.verticalSlicesComparer.Compare(image1, image2);

@@ -63,6 +63,7 @@ namespace IPH.Comparers
             {
                 throw new ArgumentNullException(nameof(image1));
             }
+
             if (image2 == null)
             {
                 throw new ArgumentNullException(nameof(image2));

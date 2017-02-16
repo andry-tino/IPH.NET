@@ -32,8 +32,37 @@ namespace IPH.Resemble
             {
                 this.errorPixelTransform = new FlatTransform();
             }
+        }
 
+        /// <summary>
+        /// Compares two images.
+        /// </summary>
+        /// <param name="image1"></param>
+        /// <param name="image2"></param>
+        /// <returns></returns>
+        public AlgorithmData Compare(Bitmap image1, Bitmap image2)
+        {
+            if (image1 == null)
+            {
+                throw new ArgumentNullException(nameof(image1));
+            }
+
+            if (image2 == null)
+            {
+                throw new ArgumentNullException(nameof(image2));
+            }
+
+            if (image1.Width != image2.Width || image1.Height != image2.Height)
+            {
+                throw new ArgumentException("Images must have the same size");
+            }
+
+            // Resetting
             this.data = new AlgorithmData();
+
+            this.AnalyzeImages(new ImageData(image1), new ImageData(image2));
+
+            return this.data;
         }
 
         private void AnalyzeImages(ImageData image1, ImageData image2)
