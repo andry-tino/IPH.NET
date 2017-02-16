@@ -13,7 +13,6 @@ namespace IPH.Comparers
     /// </summary>
     public class MultipleCrossSlicesComparer : IImagesComparer
     {
-        private readonly uint threshold;
         private readonly int slicesCount;
 
         private IImagesComparer verticalSlicesComparer;
@@ -23,13 +22,12 @@ namespace IPH.Comparers
         /// Initializes a new instance of the <see cref="MultipleCrossSlicesComparer"/> class.
         /// </summary>
         /// <param name="threshold"></param>
-        public MultipleCrossSlicesComparer(uint threshold, int slicesCount)
+        public MultipleCrossSlicesComparer(IImagesComparer comparer, int slicesCount)
         {
-            this.threshold = threshold;
             this.slicesCount = slicesCount;
 
-            this.verticalSlicesComparer = new MultipleVerticalSlicesComparer(this.threshold, this.slicesCount);
-            this.horizontalSlicesComparer = new MultipleVerticalSlicesComparer(this.threshold, this.slicesCount);
+            this.verticalSlicesComparer = new MultipleVerticalSlicesComparer(comparer, this.slicesCount);
+            this.horizontalSlicesComparer = new MultipleHorizontalSlicesComparer(comparer, this.slicesCount);
         }
 
         /// <summary>

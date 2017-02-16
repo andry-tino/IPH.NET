@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// NormalComparer.cs
+/// PrceptualHasherComparer.cs
 /// Andrea Tino - 2016
 /// </summary>
 
@@ -8,24 +8,19 @@ namespace IPH.Comparers
     using System;
 
     /// <summary>
-    /// Compares 2 images.
+    /// Abstraction of comparing algorithms.
     /// </summary>
-    public class NormalComparer : IImagesComparer
+    public class PerceptualHasherComparer : IImagesComparer
     {
-        private readonly IImagesComparer comparer;
+        private readonly uint threshold;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NormalComparer"/> class.
+        /// Initializes a new instance of the <see cref="PerceptualHasherComparer"/> class.
         /// </summary>
         /// <param name="threshold"></param>
-        public NormalComparer(IImagesComparer comparer)
+        public PerceptualHasherComparer(uint threshold)
         {
-            if (comparer == null)
-            {
-                throw new ArgumentNullException(nameof(comparer));
-            }
-
-            this.comparer = comparer;
+            this.threshold = threshold;
         }
 
         /// <summary>
@@ -51,7 +46,23 @@ namespace IPH.Comparers
                 throw new ArgumentException("Images must have the same size");
             }
 
-            return this.comparer.Compare(image1, image2);
+            var PH = new KlingerDCTBasedPerceptualHasher();
+            IHash hash1 = PH.CalculateHash(image1);
+            IHash hash2 = PH.CalculateHash(image2);
+
+            HammingDistanceCalculator hdc = new HammingDistanceCalculator(hash1, hash2);
+            var d = hdc.Distance;
+
+            var inThreshold = hdc.CompareTo(threshold);
+
+            return new CompareResult()
+            {
+                Hash1 = hash1,
+                Hash2 = hash2,
+                Distance = new Distance(d),
+                IntegerResult = inThreshold,
+                Result = inThreshold <= 0
+            };
         }
     }
 }

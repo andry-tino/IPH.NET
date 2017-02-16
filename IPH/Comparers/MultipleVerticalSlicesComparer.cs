@@ -15,9 +15,10 @@ namespace IPH.Comparers
         /// <summary>
         /// Initializes a new instance of the <see cref="MultipleVerticalSlicesComparer"/> class.
         /// </summary>
-        /// <param name="threshold"></param>
-        public MultipleVerticalSlicesComparer(uint threshold, int slicesCount) 
-            : base(threshold, slicesCount)
+        /// <param name="comparer"></param>
+        /// <param name="slicesCount"></param>
+        public MultipleVerticalSlicesComparer(IImagesComparer comparer, int slicesCount) 
+            : base(comparer, slicesCount)
         {
         }
 

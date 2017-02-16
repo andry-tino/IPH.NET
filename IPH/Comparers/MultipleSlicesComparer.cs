@@ -13,23 +13,29 @@ namespace IPH.Comparers
     /// </summary>
     public abstract class MultipleSlicesComparer: IImagesComparer
     {
-        private readonly uint threshold;
+        private readonly IImagesComparer comparer;
         private readonly int slicesCount;
 
         private ICompareResultAggregator aggregator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NormalComparer"/> class.
+        /// Initializes a new instance of the <see cref="MultipleSlicesComparer"/> class.
         /// </summary>
-        /// <param name="threshold"></param>
-        public MultipleSlicesComparer(uint threshold, int slicesCount)
+        /// <param name="comparer"></param>
+        /// <param name="slicesCount"></param>
+        public MultipleSlicesComparer(IImagesComparer comparer, int slicesCount)
         {
+            if (comparer == null)
+            {
+                throw new ArgumentNullException(nameof(comparer));
+            }
+
             if (slicesCount <= 0)
             {
                 throw new ArgumentException(nameof(slicesCount), "Number of slices cannot 0 or negative");
             }
 
-            this.threshold = threshold;
+            this.comparer = comparer;
             this.slicesCount = slicesCount;
         }
 
@@ -79,7 +85,7 @@ namespace IPH.Comparers
             int sliceLength = this.SliceLength(image1);
 
             // Calculating result on whole images
-            var normalResult = AreSlicesSimilar(image1, image2, threshold);
+            var normalResult = this.AreSlicesSimilar(image1, image2);
 
 #if DEBUG
             string seed = string.Format("#{0:X6}", new Random().Next(0x1000000));
@@ -94,7 +100,7 @@ namespace IPH.Comparers
                 Image slice1 = image1.VerticalSlice(x, sliceLength);
                 Image slice2 = image2.VerticalSlice(x, sliceLength);
 
-                var result = AreSlicesSimilar(slice1, slice2, threshold);
+                var result = this.AreSlicesSimilar(slice1, slice2);
                 result.Description = $"Slice #{i + 1}";
 
                 results.Add(result);
@@ -147,12 +153,10 @@ namespace IPH.Comparers
 
         protected int SlicesCount => this.slicesCount;
 
-        protected uint Threshold => this.threshold;
-
         protected abstract int RealSlicesCount(Image image);
 
         protected abstract int SliceLength(Image image);
 
-        private static CompareResult AreSlicesSimilar(Image image1, Image image2, uint threshold) => new NormalComparer(threshold).Compare(image1, image2);
+        private CompareResult AreSlicesSimilar(Image image1, Image image2) => this.comparer.Compare(image1, image2);
     }
 }

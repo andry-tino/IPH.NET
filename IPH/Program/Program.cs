@@ -101,13 +101,13 @@ namespace IPH.Program
             get
             {
 #if MVS_COMPARER
-                return new MultipleVerticalSlicesComparer(threshold, slicesCount);
+                return new MultipleVerticalSlicesComparer(new PerceptualHasherComparer(threshold), slicesCount);
 #elif MHS_COMPARER
-                return new MultipleHorizontalSlicesComparer(threshold, slicesCount);
+                return new MultipleHorizontalSlicesComparer(new PerceptualHasherComparer(threshold), slicesCount);
 #elif MCS_COMPARER
-                return new MultipleCrossSlicesComparer(threshold, slicesCount);
+                return new MultipleCrossSlicesComparer(new PerceptualHasherComparer(threshold), slicesCount);
 #else
-                return new NormalComparer(threshold);
+                return new NormalComparer(new PerceptualHasherComparer(threshold));
 #endif
             }
         }
