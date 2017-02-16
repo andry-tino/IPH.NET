@@ -100,7 +100,9 @@ namespace IPH.Program
         {
             get
             {
-#if MVS_COMPARER
+#if CSS_RESEMBLE
+                return new CSSResembleBasedComparer();
+#elif MVS_COMPARER
                 return new MultipleVerticalSlicesComparer(new PerceptualHasherComparer(threshold), slicesCount);
 #elif MHS_COMPARER
                 return new MultipleHorizontalSlicesComparer(new PerceptualHasherComparer(threshold), slicesCount);

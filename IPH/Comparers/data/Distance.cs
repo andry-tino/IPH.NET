@@ -16,6 +16,7 @@ namespace IPH.Comparers
         private readonly DistanceUnderlyingType type;
 
         private readonly uint uintDistance;
+        private readonly int intDistance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Distance"/> class.
@@ -25,6 +26,16 @@ namespace IPH.Comparers
         {
             this.uintDistance = uintDistance;
             this.type = DistanceUnderlyingType.UInt;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Distance"/> class.
+        /// </summary>
+        /// <param name="intDistance"></param>
+        public Distance(int intDistance)
+        {
+            this.intDistance = intDistance;
+            this.type = DistanceUnderlyingType.Int;
         }
 
         /// <summary>
@@ -38,6 +49,8 @@ namespace IPH.Comparers
                 {
                     case DistanceUnderlyingType.UInt:
                         return this.uintDistance.ToString();
+                    case DistanceUnderlyingType.Int:
+                        return this.intDistance.ToString();
                     default:
                         throw new InvalidOperationException("Not recognized type");
                 }
@@ -55,6 +68,8 @@ namespace IPH.Comparers
             {
                 case DistanceUnderlyingType.UInt:
                     return this.uintDistance.CompareTo(other);
+                case DistanceUnderlyingType.Int:
+                    return this.intDistance.CompareTo(other);
                 default:
                     throw new InvalidOperationException("Not recognized type");
             }
@@ -67,7 +82,8 @@ namespace IPH.Comparers
         /// </summary>
         private enum DistanceUnderlyingType
         {
-            UInt
+            UInt,
+            Int
         }
 
         #endregion

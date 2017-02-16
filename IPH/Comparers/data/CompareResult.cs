@@ -44,6 +44,11 @@ namespace IPH.Comparers
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets the percentage of difference for this result.
+        /// </summary>
+        public double DifferencePercentage { get; set; }
+
+        /// <summary>
         /// Gets or sets more info.
         /// </summary>
         public IEnumerable<CompareResult> DimensionalInfo;

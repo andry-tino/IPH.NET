@@ -199,7 +199,7 @@ namespace IPH.Resemble
             });
             
             this.data.RawMisMatchPercentage = (mismatchCount / (height * width) * 100);
-            this.data.MisMatchPercentage = this.data.RawMisMatchPercentage;
+            this.data.MisMatchPercentage = this.data.RawMisMatchPercentage; // Should be truncated
             this.data.DiffBounds = diffBounds;
 
             stopwatch.Stop();

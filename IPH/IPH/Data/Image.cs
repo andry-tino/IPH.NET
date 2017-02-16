@@ -53,6 +53,11 @@ namespace IPH
         }
 
         /// <summary>
+        /// Gets the bitmap;
+        /// </summary>
+        public Bitmap UnderlyingBitmap => this.image;
+
+        /// <summary>
         /// Gets the width of the image.
         /// X axis.
         /// </summary>
