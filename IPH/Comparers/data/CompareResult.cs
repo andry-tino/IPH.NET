@@ -71,7 +71,8 @@ namespace IPH.Comparers
                 Distance = this.Distance,
                 IntegerResult = this.IntegerResult,
                 Result = this.Result,
-                Description = this.Description
+                Description = this.Description,
+                DifferencePercentage = this.DifferencePercentage
             };
         }
     }

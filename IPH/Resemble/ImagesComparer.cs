@@ -129,7 +129,7 @@ namespace IPH.Resemble
 
             ToolSet.Loop(width, height, (horizontalPos, verticalPos) =>
             {
-                if (skip == 0) // Only skip if the image isn't small
+                if (skip != 0) // Only skip if the image isn't small
                 {
                     if (verticalPos % skip == 0 || horizontalPos % skip == 0)
                     {
@@ -155,7 +155,7 @@ namespace IPH.Resemble
                     }
                     else
                     {
-                        this.errorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
+                        this.ErrorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
                         mismatchCount++;
                         diffBounds.UpdateBounds(horizontalPos, verticalPos);
                     }
@@ -184,14 +184,14 @@ namespace IPH.Resemble
                         }
                         else
                         {
-                            this.errorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
+                            this.ErrorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
                             mismatchCount++;
                             diffBounds.UpdateBounds(horizontalPos, verticalPos);
                         }
                     }
                     else
                     {
-                        this.errorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
+                        this.ErrorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
                         mismatchCount++;
                         diffBounds.UpdateBounds(horizontalPos, verticalPos);
                     }

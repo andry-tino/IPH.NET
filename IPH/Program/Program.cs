@@ -61,16 +61,21 @@ namespace IPH.Program
             Console.WriteLine($"Operation completed in: {string.Format("{0:00}:{1:00}", elapsed.Seconds, elapsed.Milliseconds)}");
             Console.WriteLine();
 
-            Console.WriteLine(string.Format("Hash for image-1 is: {0}", result.Hash1.Representation));
-            Console.WriteLine(string.Format("Hash for image-2 is: {0}", result.Hash2.Representation));
+            if (result.Hash1 != null && result.Hash2 != null)
+            {
+                Console.WriteLine(string.Format("Hash for image-1 is: {0}", result.Hash1.Representation));
+                Console.WriteLine(string.Format("Hash for image-2 is: {0}", result.Hash2.Representation));
+            }
 
-            Console.WriteLine(string.Format("Distance is: {0}", result.Distance.StringRepresentation));
+            if (result.Distance != null)
+            {
+                Console.WriteLine(string.Format("Distance is: {0}", result.Distance.StringRepresentation));
+            }
 
-            Console.WriteLine(string.Format("Threshold comparison set to: {0} - Response: {1}", 
-                threshold, result.Result ? "OK" : "OOT (Out Of Threshold)"));
+            //Console.WriteLine(string.Format("Threshold comparison set to: {0} - Response: {1}", threshold, result.Result ? "OK" : "OOT (Out Of Threshold)"));
 
             Console.WriteLine();
-            Console.WriteLine("Result printout: " + result.ToString());
+            //Console.WriteLine("Result printout: " + result.ToString());
 
             if (result.DimensionalInfo != null)
             {
@@ -81,6 +86,8 @@ namespace IPH.Program
                     Console.WriteLine(dimension.ToString());
                 }
             }
+
+            Console.WriteLine("Result percentage: " + result.DifferencePercentage);
         }
 
         private static CompareResult ComputeResult(Image image1, Image image2, out TimeSpan elapsed)
