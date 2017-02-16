@@ -83,9 +83,28 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CSS_RESEMBLE_DEBUG|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\CSS_RESEMBLE_DEBUG\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CSS_RESEMBLE_RELEASE|AnyCPU'">
+    <OutputPath>bin\CSS_RESEMBLE_RELEASE\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -96,6 +115,7 @@
   <ItemGroup>
     <Compile Include="aggregation\ICompareResultAggregator.cs" />
     <Compile Include="aggregation\MaxDistanceAggregator.cs" />
+    <Compile Include="CSSResembleBasedComparer.cs" />
     <Compile Include="data\CompareResult.cs" />
     <Compile Include="data\Distance.cs" />
     <Compile Include="IImagesComparer.cs" />
@@ -104,12 +124,17 @@
     <Compile Include="MultipleSlicesComparer.cs" />
     <Compile Include="MultipleVerticalSlicesComparer.cs" />
     <Compile Include="NormalComparer.cs" />
+    <Compile Include="PerceptualHasherComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IPH\IPH.csproj">
       <Project>{ef1a80c1-1957-48d7-bdfc-7f10b83e938c}</Project>
       <Name>IPH</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resemble\Resemble.csproj">
+      <Project>{a5405ebc-0aba-47db-b84a-8c44f9732e76}</Project>
+      <Name>Resemble</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
