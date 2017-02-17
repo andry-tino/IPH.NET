@@ -145,6 +145,11 @@ namespace IPH.Resemble
             }
         }
 
+        public override string ToString()
+        {
+            return $"{{r:{this.Red}, g:{this.Green}, b:{this.Blue}, a:{this.Alpha}}}";
+        }
+
         /// <summary>
         /// The singleton instance of tolerance.
         /// </summary>
@@ -167,6 +172,8 @@ namespace IPH.Resemble
 
                 return tolerance;
             }
+
+            set { tolerance = value; }
         }
 
         #endregion

@@ -17,6 +17,9 @@ namespace IPH.Resemble
     /// </summary>
     public class ImagesComparer
     {
+        private bool ignoreAntialiasing;
+        private bool ignoreColors;
+
         private IPixelTransform errorPixelTransform;
 
         private AlgorithmData data;
@@ -36,12 +39,54 @@ namespace IPH.Resemble
         /// <summary>
         /// Gets or sets a flag indicating whether antialiasing should be ignored when comparing.
         /// </summary>
-        public bool IgnoreAntialiasing { get; set; }
+        public bool IgnoreAntialiasing
+        {
+            get { return this.ignoreAntialiasing; }
+
+            set
+            {
+                this.ignoreAntialiasing = value;
+
+                if (value)
+                {
+                    PixelColor.Tolerance = new PixelColor()
+                    {
+                        Red = 32,
+                        Green = 32,
+                        Blue = 32,
+                        Alpha = 32,
+                        MinimumBrightness = 64,
+                        MaximumBrightness = 96
+                    };
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a flag indicating whether colors should be ignored when comparing.
         /// </summary>
-        public bool IgnoreColors { get; set; }
+        public bool IgnoreColors
+        {
+            get { return this.ignoreColors; }
+
+            set
+            {
+                this.ignoreColors = value;
+
+                if (value)
+                {
+                    PixelColor.Tolerance = new PixelColor()
+                    {
+                        Red = 16,
+                        Green = 16,
+                        Blue = 16,
+                        Alpha = 16,
+                        MinimumBrightness = 16,
+                        MaximumBrightness = 240
+                    };
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the error pixel transform to use.
@@ -127,7 +172,8 @@ namespace IPH.Resemble
             var pixel1 = new PixelColor() { Red = 0, Green = 0, Blue = 0, Alpha = 0 };
             var pixel2 = new PixelColor() { Red = 0, Green = 0, Blue = 0, Alpha = 0 };
 
-            ToolSet.Loop(width, height, (horizontalPos, verticalPos) =>
+            int kkk = 0;
+            ToolSet.Loop(height, width, (verticalPos, horizontalPos) =>
             {
                 if (skip != 0) // Only skip if the image isn't small
                 {
@@ -163,6 +209,7 @@ namespace IPH.Resemble
                     return;
                 }
 
+                //if (kkk++ < 5000) Console.WriteLine($"{verticalPos}-{horizontalPos}: {pixel1.ToString()} {pixel2.ToString()}");
                 if (new RGBSimilarChecker(pixel1, pixel2).Result)
                 {
                     ToolSet.CopyPixel(targetPix, offset, pixel1/*, pixel2*/);
