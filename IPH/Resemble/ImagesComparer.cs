@@ -171,8 +171,7 @@ namespace IPH.Resemble
 
             var pixel1 = new PixelColor() { Red = 0, Green = 0, Blue = 0, Alpha = 0 };
             var pixel2 = new PixelColor() { Red = 0, Green = 0, Blue = 0, Alpha = 0 };
-
-            int kkk = 0;
+            
             ToolSet.Loop(height, width, (verticalPos, horizontalPos) =>
             {
                 if (skip != 0) // Only skip if the image isn't small
@@ -208,8 +207,7 @@ namespace IPH.Resemble
 
                     return;
                 }
-
-                //if (kkk++ < 5000) Console.WriteLine($"{verticalPos}-{horizontalPos}: {pixel1.ToString()} {pixel2.ToString()}");
+                
                 if (new RGBSimilarChecker(pixel1, pixel2).Result)
                 {
                     ToolSet.CopyPixel(targetPix, offset, pixel1/*, pixel2*/);
