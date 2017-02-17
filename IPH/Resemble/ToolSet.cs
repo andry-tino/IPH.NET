@@ -147,8 +147,8 @@ namespace IPH.Resemble
         /// <summary>
         /// Loops.
         /// </summary>
-        /// <param name="w"></param>
-        /// <param name="h"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         /// <param name="callback"></param>
         public static void Loop(int x, int y, Action<int, int> callback)
         {
