@@ -10,7 +10,7 @@ namespace IPH.Resemble
     /// <summary>
     /// Collects info about difference bounds.
     /// </summary>
-    public class DifferenceBounds
+    public struct DifferenceBounds
     {
         /// <summary>
         /// The top bound.

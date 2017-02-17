@@ -53,10 +53,10 @@ namespace IPH.Resemble
             {
                 for (int c = 0; c < image.Width; c++)
                 {
-                    this.stream[i] = image.GetPixel(c, r).R;
-                    this.stream[++i] = image.GetPixel(c, r).G;
-                    this.stream[++i] = image.GetPixel(c, r).B;
-                    this.stream[++i] = image.GetPixel(c, r).A;
+                    this.stream[i++] = image.GetPixel(c, r).R;
+                    this.stream[i++] = image.GetPixel(c, r).G;
+                    this.stream[i++] = image.GetPixel(c, r).B;
+                    this.stream[i++] = image.GetPixel(c, r).A;
                 }
             }
         }

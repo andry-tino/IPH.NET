@@ -24,7 +24,7 @@ namespace IPH.Resemble
         public ImagesComparer()
         {
             this.LargeImageThreshold = 1200;
-            this.IgnoreAntialiasing = false;
+            this.IgnoreAntialiasing = true;
             this.IgnoreColors = false;
         }
 
@@ -119,7 +119,7 @@ namespace IPH.Resemble
 
             int skip = 0;
 
-            if (LargeImageThreshold > 0 && IgnoreAntialiasing && (width > LargeImageThreshold || height > LargeImageThreshold))
+            if (this.LargeImageThreshold > 0 && this.IgnoreAntialiasing && (width > this.LargeImageThreshold || height > this.LargeImageThreshold))
             {
                 skip = 6;
             }
@@ -144,7 +144,7 @@ namespace IPH.Resemble
                     return;
                 }
 
-                if (IgnoreColors)
+                if (this.IgnoreColors)
                 {
                     pixel1.AddBrightnessInfo();
                     pixel2.AddBrightnessInfo();
@@ -159,13 +159,13 @@ namespace IPH.Resemble
                         mismatchCount++;
                         diffBounds.UpdateBounds(horizontalPos, verticalPos);
                     }
+
                     return;
                 }
 
                 if (new RGBSimilarChecker(pixel1, pixel2).Result)
                 {
                     ToolSet.CopyPixel(targetPix, offset, pixel1/*, pixel2*/);
-
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace IPH.Resemble
                         new PixelAntialiasedChecker(pixel1, data1, verticalPos, horizontalPos, width).Result || 
                         new PixelAntialiasedChecker(pixel2, data2, verticalPos, horizontalPos, width).Result;
                     
-                    if (IgnoreAntialiasing && isAntialiased)
+                    if (this.IgnoreAntialiasing && isAntialiased)
                     {
                         if (new PixelBrightnessSimilarChecker(pixel1, pixel2).Result)
                         {
@@ -198,7 +198,7 @@ namespace IPH.Resemble
                 }
             });
             
-            this.data.RawMisMatchPercentage = (mismatchCount / (height * width) * 100);
+            this.data.RawMisMatchPercentage = (double)mismatchCount / (double)(height * width) * 100;
             this.data.MisMatchPercentage = this.data.RawMisMatchPercentage; // Should be truncated
             this.data.DiffBounds = diffBounds;
 
