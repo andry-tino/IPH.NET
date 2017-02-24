@@ -131,7 +131,7 @@ namespace IPH.Resemble
         /// <returns></returns>
         public static bool GetPixelInfo(this PixelColor destination, ImageData stream, int offset)
         {
-            if (stream.Length > offset)
+            if (stream.Length > offset && offset >= 0)
             {
                 destination.Red = stream[offset];
                 destination.Green = stream[offset + 1];
