@@ -20,15 +20,22 @@ namespace IPH.Resemble
         private bool ignoreAntialiasing;
         private bool ignoreColors;
 
+        private readonly double threshold;
+
         private IPixelTransform errorPixelTransform;
 
         private AlgorithmData data;
 
-        public ImagesComparer()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="threshold">For performance reasons.</param>
+        public ImagesComparer(double threshold = -1)
         {
             this.LargeImageThreshold = 1200;
             this.IgnoreAntialiasing = true;
             this.IgnoreColors = false;
+            this.threshold = threshold;
         }
 
         /// <summary>
@@ -171,14 +178,28 @@ namespace IPH.Resemble
 
             var pixel1 = new PixelColor() { Red = 0, Green = 0, Blue = 0, Alpha = 0 };
             var pixel2 = new PixelColor() { Red = 0, Green = 0, Blue = 0, Alpha = 0 };
-            
+
+            Func<bool> updateMetric = () => 
+            {
+                this.data.RawMisMatchPercentage = (double)mismatchCount / (double)(height * width) * 100;
+                this.data.MisMatchPercentage = this.data.RawMisMatchPercentage; // Should be truncated
+                this.data.DiffBounds = diffBounds;
+
+                // Should we skip?
+                return this.threshold >= 0 && this.data.RawMisMatchPercentage > this.threshold;
+            };
+
+            int counter = 0;
+
             ToolSet.Loop(height, width, (verticalPos, horizontalPos) =>
             {
+                counter++;
+
                 if (skip != 0) // Only skip if the image isn't small
                 {
                     if (verticalPos % skip == 0 || horizontalPos % skip == 0)
                     {
-                        return;
+                        return true;
                     }
                 }
 
@@ -186,7 +207,7 @@ namespace IPH.Resemble
 
                 if (!ToolSet.GetPixelInfo(pixel1, data1, offset) || !ToolSet.GetPixelInfo(pixel2, data2, offset))
                 {
-                    return;
+                    return true;
                 }
 
                 if (this.IgnoreColors)
@@ -203,9 +224,11 @@ namespace IPH.Resemble
                         this.ErrorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
                         mismatchCount++;
                         diffBounds.UpdateBounds(horizontalPos, verticalPos);
+
+                        if (updateMetric()) return false;
                     }
 
-                    return;
+                    return true;
                 }
                 
                 if (new RGBSimilarChecker(pixel1, pixel2).Result)
@@ -232,6 +255,8 @@ namespace IPH.Resemble
                             this.ErrorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
                             mismatchCount++;
                             diffBounds.UpdateBounds(horizontalPos, verticalPos);
+
+                            if (updateMetric()) return false;
                         }
                     }
                     else
@@ -239,13 +264,15 @@ namespace IPH.Resemble
                         this.ErrorPixelTransform.Transform(targetPix, offset, pixel1, pixel2);
                         mismatchCount++;
                         diffBounds.UpdateBounds(horizontalPos, verticalPos);
+
+                        if (updateMetric()) return false;
                     }
                 }
+
+                return true;
             });
             
-            this.data.RawMisMatchPercentage = (double)mismatchCount / (double)(height * width) * 100;
-            this.data.MisMatchPercentage = this.data.RawMisMatchPercentage; // Should be truncated
-            this.data.DiffBounds = diffBounds;
+            updateMetric();
 
             stopwatch.Stop();
             this.data.AnalysisTime = stopwatch.Elapsed;

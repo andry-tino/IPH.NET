@@ -150,13 +150,13 @@ namespace IPH.Resemble
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="callback"></param>
-        public static void Loop(int x, int y, Action<int, int> callback)
+        public static void Loop(int x, int y, Func<int, int, bool> callback)
         {
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
                 {
-                    callback(i, j);
+                    if (!callback(i, j)) return;
                 }
             }
         }

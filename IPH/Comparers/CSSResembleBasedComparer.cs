@@ -12,11 +12,14 @@ namespace IPH.Comparers
     /// </summary>
     public class CSSResembleBasedComparer : IImagesComparer
     {
+        private readonly double? threshold;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CSSResembleBasedComparer"/> class.
         /// </summary>
-        public CSSResembleBasedComparer()
+        public CSSResembleBasedComparer(double? threshold = null)
         {
+            this.threshold = threshold;
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace IPH.Comparers
                 throw new ArgumentException("Images must have the same size");
             }
 
-            var Resemble = new Resemble.ImagesComparer();
+            var Resemble = this.threshold.HasValue ? new Resemble.ImagesComparer(this.threshold.Value) : new Resemble.ImagesComparer();
             var result = Resemble.Compare(image1.UnderlyingBitmap, image2.UnderlyingBitmap);
 
             return new CompareResult()
