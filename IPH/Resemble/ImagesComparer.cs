@@ -189,12 +189,8 @@ namespace IPH.Resemble
                 return this.threshold >= 0 && this.data.RawMisMatchPercentage > this.threshold;
             };
 
-            int counter = 0;
-
             ToolSet.Loop(height, width, (verticalPos, horizontalPos) =>
             {
-                counter++;
-
                 if (skip != 0) // Only skip if the image isn't small
                 {
                     if (verticalPos % skip == 0 || horizontalPos % skip == 0)
